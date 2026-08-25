@@ -14,14 +14,26 @@ COPY securo/frontend/ ./
 RUN npm run build
 
 # ============================================================================
-# Stage 2: Backend dependencies
+# Stage 2: Backend dependencies (Alpine for musl compatibility)
 # ============================================================================
-FROM python:3.12-slim AS backend-deps
+FROM python:3.12-alpine AS backend-deps
+
+RUN apk add --no-cache \
+    gcc \
+    musl-dev \
+    libpq-dev \
+    postgresql15-dev
 
 WORKDIR /build
 
-COPY securo/backend/requirements*.txt ./
-RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
+COPY securo/backend/pyproject.toml securo/backend/uv.lock ./
+RUN pip install --no-cache-dir uv \
+    && uv export --frozen --no-emit-project -o /tmp/requirements.txt \
+    && pip install --no-cache-dir -r /tmp/requirements.txt \
+    && rm /tmp/requirements.txt
+
+COPY securo/backend/ ./
+RUN pip install --no-cache-dir --no-deps -e .
 
 # ============================================================================
 # Stage 3: Runtime
@@ -43,7 +55,8 @@ RUN apk add --no-cache \
 
 RUN ln -sf /usr/bin/python3 /usr/bin/python
 
-COPY --from=backend-deps /install /usr/local
+COPY --from=backend-deps /usr/local/lib/python3.12/site-packages /usr/local/lib/python3.12/site-packages
+COPY --from=backend-deps /usr/local/bin /usr/local/bin
 
 ARG BUILD_VERSION=0.26.0
 ARG BUILD_ARCH=amd64
