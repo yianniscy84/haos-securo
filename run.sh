@@ -7,6 +7,10 @@
 CONFIG_PATH=/data/options.json
 PGDATA="/data/postgres"
 APP_DIR="/app"
+# Create default options.json if not present (e.g. on first run with mounted volume)
+if [ ! -f "${CONFIG_PATH}" ]; then
+    echo '{"secret_key":"","frontend_url":"","debug":false,"db_password":"postgres","pluggy_client_id":"","pluggy_client_secret":"","enable_banking_app_id":"","enable_banking_private_key_file":"","enable_banking_oauth_redirect_uri":"","simplefin_enabled":false,"simplefin_api_url":"https://beta-bridge.simplefin.org","oidc_enabled":false,"oidc_provider_name":"OIDC","oidc_discovery_url":"","oidc_client_id":"","oidc_client_secret":"","oidc_redirect_uri":"","oidc_scopes":"openid email profile","oidc_auto_register":true,"oidc_existing_user_link_mode":"disabled","oidc_require_verified_email":true,"oidc_sync_roles":false,"oidc_roles_claim":"groups","oidc_admin_roles":"","oidc_workspace_role_map":"","local_auth_enabled":true,"openexchangerates_app_id":"","fx_sync_mode":"on_demand","tesouro_direto_enabled":true}' > "${CONFIG_PATH}"
+fi
 
 # --------------------------------------------------------------------------
 # Read options from config

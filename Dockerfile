@@ -44,14 +44,39 @@ FROM ${BUILD_FROM}
 # or by the HA base image in CI). Do NOT add py3-pip / py3-psycopg2 via apk —
 # they conflict with pip-installed packages from the build stage.
 RUN apk add --no-cache \
+    bash \
     postgresql16 \
     postgresql16-client \
+    postgresql16-contrib \
     redis \
     nginx \
     curl \
     libpq \
     tzdata \
+    && apk add --no-cache --virtual .build-deps \
+       postgresql16-dev \
+       build-base \
+       git \
+       clang \
+       llvm-dev \
+    && git clone --branch v0.8.0 https://github.com/pgvector/pgvector.git /tmp/pgvector \
+    && cd /tmp/pgvector \
+    && make PG_CONFIG=/usr/libexec/postgresql16/pg_config \
+    && make install PG_CONFIG=/usr/libexec/postgresql16/pg_config \
+    && rm -rf /tmp/pgvector \
+    && apk del .build-deps \
     && rm -rf /var/cache/apk/*
+
+# Stubs for bashio + with-contenv (local / non-HA builds).
+# COPY always runs, but the RUN wires them up only when the HA base image
+# hasn't already provided the real implementations.
+COPY bashio_stub.sh /usr/local/lib/bashio_stub.sh
+COPY with-contenv   /usr/local/lib/with-contenv-stub
+RUN if ! command -v with-contenv >/dev/null 2>&1; then \
+      sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-stub; \
+      cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv; \
+      chmod +x /usr/bin/with-contenv; \
+    fi
 
 ARG BUILD_VERSION=0.26.0
 ARG BUILD_ARCH=amd64
@@ -78,10 +103,17 @@ COPY --from=frontend-build /src/frontend/dist /var/www/securo
 # Copy addon config files
 COPY nginx.conf /etc/nginx/nginx.conf
 COPY run.sh /run.sh
-RUN chmod a+x /run.sh
+RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 
-# Persistent data directories
-RUN mkdir -p /data/postgres /data/attachments /data/nginx /var/log/nginx
+# Persistent data directories + seed a default options.json for local runs.
+# In HA OS /data is a persistent volume and options.json is written by the
+# supervisor before the addon starts — this default is only used locally.
+RUN mkdir -p /data/postgres /data/attachments /data/nginx /var/log/nginx /run/postgresql \
+    && chown postgres:postgres /run/postgresql \
+    && touch /var/log/postgresql.log \
+    && chown postgres:postgres /var/log/postgresql.log \
+    && echo '{"secret_key":"","frontend_url":"","debug":false,"db_password":"postgres","pluggy_client_id":"","pluggy_client_secret":"","enable_banking_app_id":"","enable_banking_private_key_file":"","enable_banking_oauth_redirect_uri":"","simplefin_enabled":false,"simplefin_api_url":"https://beta-bridge.simplefin.org","oidc_enabled":false,"oidc_provider_name":"OIDC","oidc_discovery_url":"","oidc_client_id":"","oidc_client_secret":"","oidc_redirect_uri":"","oidc_scopes":"openid email profile","oidc_auto_register":true,"oidc_existing_user_link_mode":"disabled","oidc_require_verified_email":true,"oidc_sync_roles":false,"oidc_roles_claim":"groups","oidc_admin_roles":"","oidc_workspace_role_map":"","local_auth_enabled":true,"openexchangerates_app_id":"","fx_sync_mode":"on_demand","tesouro_direto_enabled":true}' \
+      > /data/options.json
 
 EXPOSE 80
 

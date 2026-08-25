@@ -35,7 +35,7 @@ CI builds happen on tag push → GHCR. Local builds default to `alpine:3.21` via
 - **Entry point**: `uvicorn app.main:app` (FastAPI). App module is at `securo/backend/app/main.py`.
 - **Celery**: `celery -A app.worker worker/beat`. Worker and beat run as background processes, not s6 services.
 - **AI agents disabled**: `AGENTS_ENABLED=false` in run.sh. Don't re-enable without user asking.
-- **Database**: PostgreSQL 16, data persisted to `/data/postgres`. Migrations via `alembic upgrade head` on startup.
+- **Database**: PostgreSQL 16, data persisted to `/data/postgres`. Migrations via `alembic upgrade head` on startup. Requires `pgcrypto` (provided by the `postgresql16-contrib` package) and `pgvector` (built from source in the Dockerfile runtime stage) to complete migrations.
 - **Redis**: Used for Celery broker + cache. No persistence (`appendonly no --save ""`).
 - **Ingress**: Addon appears in HA sidebar. Ingress port is 80, entry path is `/`.
 - **Port 80**: Exposed for non-ingress access (direct HTTP).
@@ -58,3 +58,5 @@ git tag 0.26.1 && git push origin 0.26.1
 - Build fails with `onnxruntime` → musl issue. Either switch runtime to Debian (`python:3.12-slim`) or remove `fastembed` from pyproject.toml
 - Container starts but backend errors → check `DATABASE_URL` format: `postgresql+asyncpg://postgres:<password>@localhost:5432/securo`
 - `bashio` not found in logs → entry script shebang must be `#!/usr/bin/with-contenv bashio`
+- Migration fails with `pgvector is not installed` or `pgcrypto is not available` → ensure `postgresql16-contrib` is installed and `pgvector` compiled successfully in the Dockerfile.
+- Startup fails with Pydantic validation error (`ValidationError`) for boolean variables like `debug` → check if `/data/options.json` is missing or empty inside the container. `run.sh` will auto-generate a default one on startup if it is not present.
