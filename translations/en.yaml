@@ -1,0 +1,49 @@
+configuration:
+  secret_key:
+    name: Secret Key
+    description: Secret key for session signing. Leave empty to auto-generate.
+  frontend_url:
+    name: Frontend URL
+    description: Public URL where Securo is accessible (e.g. https://securo.example.com). Used for OAuth callbacks and CORS.
+  debug:
+    name: Debug Mode
+    description: Enable debug logging.
+  db_password:
+    name: Database Password
+    description: PostgreSQL password.
+  pluggy_client_id:
+    name: Pluggy Client ID
+    description: Client ID for Pluggy bank sync (Brazilian banks).
+  pluggy_client_secret:
+    name: Pluggy Client Secret
+    description: Client secret for Pluggy bank sync.
+  enable_banking_app_id:
+    name: Enable Banking App ID
+    description: Application ID for Enable Banking (European banks).
+  simplefin_enabled:
+    name: SimpleFIN Enabled
+    description: Enable SimpleFIN bank sync (US and international).
+  oidc_enabled:
+    name: OIDC Enabled
+    description: Enable OIDC single sign-on.
+  oidc_provider_name:
+    name: OIDC Provider Name
+    description: Display name for the OIDC provider.
+  oidc_discovery_url:
+    name: OIDC Discovery URL
+    description: OpenID Connect discovery URL.
+  oidc_client_id:
+    name: OIDC Client ID
+    description: OIDC client ID.
+  oidc_client_secret:
+    name: OIDC Client Secret
+    description: OIDC client secret.
+  local_auth_enabled:
+    name: Local Authentication
+    description: Allow password-based login (disable for OIDC-only mode).
+  openexchangerates_app_id:
+    name: Open Exchange Rates App ID
+    description: API key for automatic currency conversion.
+  tesouro_direto_enabled:
+    name: Tesouro Direto
+    description: Enable Brazilian Treasury bond lookup.
