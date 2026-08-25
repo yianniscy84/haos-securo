@@ -2,7 +2,7 @@
 
 Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL, Redis, FastAPI backend, React frontend, Celery worker+beat.
 
-![Securo](icon.png)
+![Securo](securo/icon.png)
 
 ## Features
 
@@ -21,21 +21,15 @@ Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL,
 
 ## Installation
 
-### HACS (recommended)
+### Add-on Store (recommended)
 
-1. Add this repository as a custom addon repository in Home Assistant
-2. Navigate to **Settings → Add-ons → Add-on Store**
-3. Find **Securo** and install it
-4. Configure the options and start the addon
+1. Open **Settings → Add-ons → Add-on Store**
+2. Click the three dots (⋮) → **Repositories**
+3. Add `https://github.com/yianniscy84/haos-securo`
+4. Find **Securo** and install it
+5. Configure the options and start the addon
 
-### Manual
-
-```bash
-cd /addons
-git clone https://github.com/yianniscy84/haos-securo.git securo
-```
-
-Then restart Home Assistant.
+HAOS pulls pre-built images from GHCR — no local build required.
 
 ## Configuration
 
@@ -96,7 +90,8 @@ After installation, Securo is available:
 ## Development
 
 ```bash
-# Build locally
+# Build locally — run from the securo/ addon directory
+cd securo
 docker build -t securo-addon .
 
 # Run
@@ -125,12 +120,15 @@ docker build -t securo-addon .
 
 ## Release
 
-CI builds multi-arch images (amd64 + aarch64) on tag push → GHCR.
-
 ```bash
-git tag 0.26.1
-git push origin 0.26.1
+# 1. Bump version in securo/config.yaml
+# 2. Commit
+git add securo/config.yaml && git commit -m "release: 0.27.0"
+# 3. Tag + push
+git tag 0.27.0 && git push origin main --tags
 ```
+
+CI builds multi-arch images (amd64 + aarch64) → GHCR. HAOS detects the version change and pulls the new image automatically.
 
 ## Links
 

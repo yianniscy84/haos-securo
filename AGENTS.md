@@ -7,7 +7,8 @@ A Home Assistant OS addon (addon) that bundles [securo-finance/securo](https://g
 ## Build & Run
 
 ```bash
-# Local build (Alpine base — no HA base image needed)
+# Local build — run from the securo/ addon directory
+cd securo
 docker build -t securo-addon .
 
 # Quick smoke test
@@ -17,11 +18,13 @@ docker run -d --name securo-test -p 8080:80 -v securo-data:/data securo-addon
 
 CI builds happen on tag push → GHCR. Local builds default to `alpine:3.21` via `BUILD_FROM` arg. CI overrides with `ghcr.io/home-assistant/${{ matrix.arch }}-base:latest`.
 
+**Important**: The Dockerfile lives at `securo/Dockerfile` and the build context is the `securo/` directory. All COPY paths are relative to `securo/` — do NOT prefix with `securo/`.
+
 ## Repo Structure
 
 - `Dockerfile` — Multi-stage: node frontend → python Alpine backend-deps → Alpine runtime
 - `run.sh` — Entry script (`#!/usr/bin/with-contenv bashio`). Reads HA options, starts all services, handles shutdown
-- `config.yaml` — HA addon manifest (options schema, ports, ingress, arch support)
+- `config.yaml` — HA addon manifest (options schema, ports, ingress, arch support). Has `image:` field for GHCR-based auto-updates
 - `nginx.conf` — Reverse proxy: serves frontend static files, proxies `/api/` and `/ws/` to localhost:8000
 - `securo/backend/` — Bundled Python source (FastAPI, SQLAlchemy, Celery). Use `pyproject.toml` + `uv.lock` for deps
 - `securo/frontend/` — Bundled React/Vite source. Built in Docker stage 1
@@ -51,6 +54,12 @@ Tag push triggers `.github/workflows/build.yaml`. Push a tag to release:
 ```bash
 git tag 0.26.1 && git push origin 0.26.1
 ```
+
+**Image-based addon**: `config.yaml` has `image: ghcr.io/yianniscy84/haos-securo`. HAOS pulls pre-built images from GHCR instead of building locally. To release:
+1. Bump `version` in `securo/config.yaml`
+2. Commit + push a tag matching the version
+3. CI builds multi-arch images → GHCR
+4. HAOS detects version change → pulls new image
 
 ## Troubleshooting
 
