@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/home-assistant/base-amd64:latest
+ARG BUILD_FROM=alpine:3.21
 
 # ============================================================================
 # Stage 1: Build frontend
