@@ -67,7 +67,7 @@ jobs:
           build-args: |
             BUILD_FROM=ghcr.io/home-assistant/${{ matrix.arch }}-base:latest
             BUILD_ARCH=${{ matrix.arch }}
-            SECURE_VERSION=${{ github.ref_name }}
+            BUILD_VERSION=${{ github.ref_name }}
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/${{ matrix.arch }}:${{ github.ref_name }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha

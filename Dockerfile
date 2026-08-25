@@ -5,19 +5,13 @@ ARG BUILD_FROM=ghcr.io/home-assistant/base-amd64:latest
 # ============================================================================
 FROM node:22-alpine AS frontend-build
 
-WORKDIR /build
-
-RUN apk add --no-cache git
-
-ARG SECURE_REPO_URL=https://github.com/securo-finance/securo.git
-ARG SECURE_VERSION=main
-
-RUN git clone --depth 1 --branch ${SECURE_VERSION} ${SECURE_REPO_URL} /src
-
 WORKDIR /src/frontend
 
-RUN npm ci --ignore-scripts \
-    && npm run build
+COPY securo/frontend/package*.json ./
+RUN npm ci --ignore-scripts
+
+COPY securo/frontend/ ./
+RUN npm run build
 
 # ============================================================================
 # Stage 2: Backend dependencies
@@ -26,8 +20,7 @@ FROM python:3.12-slim AS backend-deps
 
 WORKDIR /build
 
-COPY --from=frontend-build /src/backend/requirements*.txt ./
-
+COPY securo/backend/requirements*.txt ./
 RUN pip install --no-cache-dir --prefix=/install -r requirements.txt
 
 # ============================================================================
@@ -44,7 +37,6 @@ RUN apk add --no-cache \
     redis \
     nginx \
     curl \
-    git \
     libpq \
     tzdata \
     && rm -rf /var/cache/apk/*
@@ -53,20 +45,18 @@ RUN ln -sf /usr/bin/python3 /usr/bin/python
 
 COPY --from=backend-deps /install /usr/local
 
-ARG SECURE_VERSION=main
+ARG BUILD_VERSION=0.26.0
 ARG BUILD_ARCH=amd64
 
 LABEL \
-    io.hass.version="${SECURE_VERSION}" \
+    io.hass.version="${BUILD_VERSION}" \
     io.hass.type="app" \
     io.hass.arch="${BUILD_ARCH}"
 
 WORKDIR /app
 
-# Clone the securo repo at build time
-RUN git clone --depth 1 https://github.com/securo-finance/securo.git /src/securo \
-    && cp -r /src/securo/backend/* /app/ \
-    && rm -rf /src/securo
+# Copy backend source
+COPY securo/backend/ /app/
 
 # Copy built frontend
 COPY --from=frontend-build /src/frontend/dist /var/www/securo
