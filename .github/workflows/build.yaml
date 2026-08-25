@@ -61,7 +61,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: .
+          context: ./securo
+          file: ./securo/Dockerfile
           platforms: ${{ steps.platform.outputs.platform }}
           push: true
           build-args: |
