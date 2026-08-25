@@ -70,8 +70,8 @@ RUN apk add --no-cache \
 # Stubs for bashio + with-contenv (local / non-HA builds).
 # COPY always runs, but the RUN wires them up only when the HA base image
 # hasn't already provided the real implementations.
-COPY bashio_stub.sh /usr/local/lib/bashio_stub.sh
-COPY with-contenv   /usr/local/lib/with-contenv-stub
+COPY securo/bashio_stub.sh /usr/local/lib/bashio_stub.sh
+COPY securo/with-contenv   /usr/local/lib/with-contenv-stub
 RUN if ! command -v with-contenv >/dev/null 2>&1; then \
       sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-stub; \
       cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv; \
@@ -101,8 +101,8 @@ COPY securo/backend/ /app/
 COPY --from=frontend-build /src/frontend/dist /var/www/securo
 
 # Copy addon config files
-COPY nginx.conf /etc/nginx/nginx.conf
-COPY run.sh /run.sh
+COPY securo/nginx.conf /etc/nginx/nginx.conf
+COPY securo/run.sh /run.sh
 RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 
 # Persistent data directories + seed a default options.json for local runs.

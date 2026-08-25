@@ -1,0 +1,5 @@
+#!/bin/sh
+# Minimal with-contenv stub for local (non-HA) builds.
+# In HA OS, with-contenv loads s6 environment variables.
+# Locally, it just executes the remaining arguments as a command.
+exec "$@"
