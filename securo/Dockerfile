@@ -7,10 +7,10 @@ FROM node:22-alpine AS frontend-build
 
 WORKDIR /src/frontend
 
-COPY securo/frontend/package*.json ./
+COPY frontend/package*.json ./
 RUN npm ci --ignore-scripts
 
-COPY securo/frontend/ ./
+COPY frontend/ ./
 RUN npm run build
 
 # ============================================================================
@@ -26,13 +26,13 @@ RUN apk add --no-cache \
 
 WORKDIR /build
 
-COPY securo/backend/pyproject.toml securo/backend/uv.lock ./
+COPY backend/pyproject.toml backend/uv.lock ./
 RUN pip install --no-cache-dir uv \
     && uv export --frozen --no-emit-project --no-hashes -o /tmp/requirements.txt \
     && pip install --no-cache-dir -r /tmp/requirements.txt \
     && rm /tmp/requirements.txt
 
-COPY securo/backend/ ./
+COPY backend/ ./
 RUN pip install --no-cache-dir --no-deps .
 
 # ============================================================================
@@ -70,8 +70,8 @@ RUN apk add --no-cache \
 # Stubs for bashio + with-contenv (local / non-HA builds).
 # COPY always runs, but the RUN wires them up only when the HA base image
 # hasn't already provided the real implementations.
-COPY securo/bashio_stub.sh /usr/local/lib/bashio_stub.sh
-COPY securo/with-contenv   /usr/local/lib/with-contenv-stub
+COPY bashio_stub.sh /usr/local/lib/bashio_stub.sh
+COPY with-contenv   /usr/local/lib/with-contenv-stub
 RUN if ! command -v with-contenv >/dev/null 2>&1; then \
       sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-stub; \
       cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv; \
@@ -95,14 +95,14 @@ COPY --from=backend-deps /usr/local/bin /usr/local/bin
 WORKDIR /app
 
 # Copy backend source
-COPY securo/backend/ /app/
+COPY backend/ /app/
 
 # Copy built frontend
 COPY --from=frontend-build /src/frontend/dist /var/www/securo
 
 # Copy addon config files
-COPY securo/nginx.conf /etc/nginx/nginx.conf
-COPY securo/run.sh /run.sh
+COPY nginx.conf /etc/nginx/nginx.conf
+COPY run.sh /run.sh
 RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 
 # Persistent data directories + seed a default options.json for local runs.
