@@ -76,9 +76,6 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY run.sh /run.sh
 RUN chmod a+x /run.sh
 
-# Copy S6 service definitions
-COPY s6-overlay/ /etc/s6-overlay/s6-rc.d/
-
 # Persistent data directories
 RUN mkdir -p /data/postgres /data/attachments /data/nginx /var/log/nginx
 
