@@ -18,6 +18,7 @@ Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL,
 - Multi-currency support with automatic FX conversion
 - 2FA (TOTP), passkeys, and OIDC login
 - Multi-user support with admin panel
+- Optional AI agents and MCP (opt-in via `agents_enabled`)
 
 ## Installation
 
@@ -59,12 +60,27 @@ HAOS pulls pre-built images from GHCR — no local build required.
 | `oidc_client_id` | OIDC client ID |
 | `oidc_client_secret` | OIDC client secret |
 
+### AI agents and MCP
+
+Off by default. Enable `agents_enabled` to start the MCP server and Agents UI.
+
+| Option | Description | Default |
+|---|---|---|
+| `agents_enabled` | Enable AI agents and the built-in MCP server | `false` |
+| `agents_mcp_jwt_secret` | MCP JWT secret (auto-generated if empty) | `""` |
+| `agents_external_mcp_url` | Public MCP URL shown in the UI | `""` |
+| `agents_extra_mcp_servers` | Extra MCP servers `URL[|name],...` | `""` |
+| `agents_embedding_provider` | Embeddings: `ollama`, `openai`, or `openai_compatible` | `ollama` |
+
+Point Claude Desktop, Cursor, n8n, or Home Assistant’s MCP client at `http://<ha-host>:8765/mcp` or `http://<ha-host>:<port-80>/mcp` with a Bearer token minted in **Agents → Connections**. Do not use the HA ingress URL. Native/fastembed embeddings are not available on Alpine.
+
 ## Accessing the App
 
 After installation, Securo is available:
 
-- **Home Assistant sidebar** — Ingress enabled by default
-- **Port 80** — Direct HTTP access on your HA host
+- **Home Assistant sidebar** — Ingress enabled by default (web UI only; not for MCP clients)
+- **Port 80** — Direct HTTP access on your HA host (`/mcp` when agents are enabled)
+- **Port 8765** — Built-in MCP JSON-RPC endpoint when agents are enabled
 
 ## Architecture
 
@@ -78,11 +94,13 @@ After installation, Securo is available:
 │  │  Nginx :80                   │   │
 │  │    ├── / → React SPA         │   │
 │  │    ├── /api/ → Uvicorn :8000 │   │
-│  │    └── /ws/  → Uvicorn :8000 │   │
+│  │    ├── /ws/  → Uvicorn :8000 │   │
+│  │    └── /mcp  → MCP :8765     │   │
 │  │                              │   │
 │  │  PostgreSQL :5432            │   │
 │  │  Redis :6379                 │   │
 │  │  Celery worker + beat        │   │
+│  │  MCP server :8765 (opt-in)   │   │
 │  └──────────────────────────────┘   │
 └─────────────────────────────────────┘
 ```
@@ -97,6 +115,7 @@ docker build -t securo-addon .
 # Run
 docker run -d --name securo-test \
   -p 8080:80 \
+  -p 8765:8765 \
   -v securo-data:/data \
   securo-addon
 

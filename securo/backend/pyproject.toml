@@ -36,9 +36,8 @@ dependencies = [
     "pyzipper>=0.4.0",
     # fastembed / onnxruntime intentionally excluded: onnxruntime has no
     # musllinux wheel so it cannot be installed on Alpine (musl libc).
-    # Agents are disabled in the HAOS addon (AGENTS_ENABLED=false), so
-    # the embedding path is never exercised. Re-add only if the runtime
-    # is switched to a glibc-based image and agents are enabled.
+    # Native embeddings are unavailable; when agents/MCP are enabled, use
+    # ollama/openai/openai_compatible for AGENTS_EMBEDDING_PROVIDER.
 ]
 
 [project.optional-dependencies]

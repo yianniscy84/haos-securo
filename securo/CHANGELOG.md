@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.27.0
+
+- Opt-in AI agents and built-in MCP server (`agents_enabled`)
+- Expose MCP on port 8765 and proxy `/mcp` on the web port
+- Persist MCP JWT secret under `/data` so minted tokens survive restarts
+- Native (fastembed) embeddings remain unavailable on Alpine; use Ollama or OpenAI for RAG
+
 ## 0.26.10
 
 - Fix OIDC login redirect to use basename for ingress compatibility

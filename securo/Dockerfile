@@ -108,13 +108,13 @@ RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 # Persistent data directories + seed a default options.json for local runs.
 # In HA OS /data is a persistent volume and options.json is written by the
 # supervisor before the addon starts — this default is only used locally.
-RUN mkdir -p /data/postgres /data/attachments /data/nginx /var/log/nginx /run/postgresql \
+RUN mkdir -p /data/postgres /data/attachments /data/nginx /data/agent_knowledge /data/embedding_models /var/log/nginx /run/postgresql \
     && chown postgres:postgres /run/postgresql \
     && touch /var/log/postgresql.log \
     && chown postgres:postgres /var/log/postgresql.log \
-    && echo '{"secret_key":"","frontend_url":"","debug":false,"db_password":"postgres","pluggy_client_id":"","pluggy_client_secret":"","enable_banking_app_id":"","enable_banking_private_key_file":"","enable_banking_oauth_redirect_uri":"","simplefin_enabled":false,"simplefin_api_url":"https://beta-bridge.simplefin.org","oidc_enabled":false,"oidc_provider_name":"OIDC","oidc_discovery_url":"","oidc_client_id":"","oidc_client_secret":"","oidc_redirect_uri":"","oidc_scopes":"openid email profile","oidc_auto_register":true,"oidc_existing_user_link_mode":"disabled","oidc_require_verified_email":true,"oidc_sync_roles":false,"oidc_roles_claim":"groups","oidc_admin_roles":"","oidc_workspace_role_map":"","local_auth_enabled":true,"openexchangerates_app_id":"","fx_sync_mode":"on_demand","tesouro_direto_enabled":true}' \
+    && echo '{"secret_key":"","frontend_url":"","debug":false,"db_password":"postgres","pluggy_client_id":"","pluggy_client_secret":"","enable_banking_app_id":"","enable_banking_private_key_file":"","enable_banking_oauth_redirect_uri":"","simplefin_enabled":false,"simplefin_api_url":"https://beta-bridge.simplefin.org","oidc_enabled":false,"oidc_provider_name":"OIDC","oidc_discovery_url":"","oidc_client_id":"","oidc_client_secret":"","oidc_redirect_uri":"","oidc_scopes":"openid email profile","oidc_auto_register":true,"oidc_existing_user_link_mode":"disabled","oidc_require_verified_email":true,"oidc_sync_roles":false,"oidc_roles_claim":"groups","oidc_admin_roles":"","oidc_workspace_role_map":"","local_auth_enabled":true,"openexchangerates_app_id":"","fx_sync_mode":"on_demand","tesouro_direto_enabled":true,"agents_enabled":false,"agents_mcp_jwt_secret":"","agents_external_mcp_url":"","agents_extra_mcp_servers":"","agents_default_provider":"","agents_default_model":"","agents_openai_api_key":"","agents_anthropic_api_key":"","agents_ollama_base_url":"","agents_openai_compat_base_url":"","agents_openai_compat_api_key":"","agents_embedding_provider":"ollama"}' \
       > /data/options.json
 
-EXPOSE 80
+EXPOSE 80 8765
 
 CMD ["/run.sh"]
