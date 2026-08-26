@@ -66,7 +66,7 @@ import type {
 } from '@/types'
 
 const api = axios.create({
-  baseURL: 'api',
+  baseURL: `${basename}/api`,
 })
 
 // Storage key for the currently-selected workspace ID. Lives in

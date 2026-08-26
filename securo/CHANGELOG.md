@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.9
+
+- Fix axios baseURL to use absolute path with basename for reliable ingress API routing
+
 ## 0.26.8
 
 - Fix account detail page crash when `account.type` is empty string

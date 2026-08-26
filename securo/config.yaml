@@ -2,7 +2,7 @@ name: "Securo"
 description: >-
   Self-hosted personal finance manager. Multi-account tracking,
   transaction imports, bank sync, budgets, goals, and reports.
-version: "0.26.8"
+version: "0.26.9"
 image: ghcr.io/yianniscy84/haos-securo
 slug: "securo"
 init: false
