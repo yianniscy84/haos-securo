@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.7
+
+- Fix account detail page crash when projected transactions data is not an array
+
 ## 0.26.6
 
 - Fix HA ingress path detection to match `/api/hassio_ingress/<token>` pattern

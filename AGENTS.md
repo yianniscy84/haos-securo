@@ -57,9 +57,12 @@ git tag 0.26.1 && git push origin 0.26.1
 
 **Image-based addon**: `config.yaml` has `image: ghcr.io/yianniscy84/haos-securo`. HAOS pulls pre-built images from GHCR instead of building locally. To release:
 1. Bump `version` in `securo/config.yaml`
-2. Commit + push a tag matching the version
-3. CI builds multi-arch images → GHCR
-4. HAOS detects version change → pulls new image
+2. **Update `securo/CHANGELOG.md`** with a new section for the version
+3. Commit + push a tag matching the version
+4. CI builds multi-arch images → GHCR
+5. HAOS detects version change → pulls new image
+
+**IMPORTANT**: Always update `securo/CHANGELOG.md` when bumping the version. Add a new `## X.Y.Z` section describing what changed.
 
 ## Troubleshooting
 
