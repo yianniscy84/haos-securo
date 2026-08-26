@@ -124,7 +124,7 @@ export default function LoginPage() {
   }
 
   const handleOIDCLogin = () => {
-    window.location.href = 'api/auth/oidc/login'
+    window.location.href = `${window.location.pathname.replace(/\/$/, '')}/api/auth/oidc/login`
   }
 
   const handlePasskeyLogin = async () => {

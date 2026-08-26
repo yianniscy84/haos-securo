@@ -1,5 +1,6 @@
 import axios from 'axios'
 import type { NumberFormat, DateFormat } from '@/lib/format'
+import { basename } from '@/lib/basename'
 import type {
   User,
   AdminUser,
@@ -92,7 +93,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response?.status === 401) {
       localStorage.removeItem('token')
-      window.location.href = 'login'
+      window.location.href = `${basename}/login`
     }
     return Promise.reject(error)
   }

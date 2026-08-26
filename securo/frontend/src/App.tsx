@@ -10,6 +10,7 @@ import { ProtectedRoute } from '@/components/protected-route'
 import { AdminRoute } from '@/components/admin-route'
 import { AgentsRoute } from '@/components/agents-route'
 import { ModuleRoute } from '@/components/module-route'
+import { basename } from '@/lib/basename'
 import { AppLayout } from '@/components/app-layout'
 
 const SetupPage = lazy(() => import('@/pages/setup'))
@@ -56,12 +57,6 @@ function LoadingFallback() {
     </div>
   )
 }
-
-// Detect Home Assistant ingress base path (e.g. /2afa7cbc_securo) so
-// React Router can match routes when the addon is embedded in the HA UI.
-// Falls back to empty string for direct access (no prefix).
-const basename =
-  window.location.pathname.match(/\/[a-f0-9]+_[a-z][a-z0-9-]*/)?.[0] ?? ''
 
 function App() {
   return (
