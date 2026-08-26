@@ -39,7 +39,7 @@ export async function streamChat(opts: SendMessageOptions): Promise<void> {
     Authorization: token ? `Bearer ${token}` : '',
   }
   if (workspaceId) headers['X-Workspace-Id'] = workspaceId
-  const res = await fetch(`/api/agents/${opts.agentId}/chat`, {
+  const res = await fetch(`api/agents/${opts.agentId}/chat`, {
     method: 'POST',
     signal: opts.signal,
     headers,
