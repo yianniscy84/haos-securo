@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { useAuth } from '@/contexts/auth-context'
 import { setup, auth as authApi, admin as adminApi } from '@/lib/api'
+import { basename } from '@/lib/basename'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -124,7 +125,7 @@ export default function LoginPage() {
   }
 
   const handleOIDCLogin = () => {
-    window.location.href = `${window.location.pathname.replace(/\/$/, '')}/api/auth/oidc/login`
+    window.location.href = `${basename}/api/auth/oidc/login`
   }
 
   const handlePasskeyLogin = async () => {

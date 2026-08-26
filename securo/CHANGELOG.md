@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.26.10
+
+- Fix OIDC login redirect to use basename for ingress compatibility
+- Fix agents SSE fetch URL to use absolute path with basename
+- Fix chatUrl helper to include basename prefix
+
 ## 0.26.9
 
 - Fix axios baseURL to use absolute path with basename for reliable ingress API routing

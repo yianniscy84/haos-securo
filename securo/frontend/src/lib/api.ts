@@ -1630,7 +1630,7 @@ export const agents = {
   },
   // Streaming chat endpoint — caller handles the SSE response themselves
   // (see lib/agents-stream.ts). We just expose the URL + body builder.
-  chatUrl: (agentId: string) => `/api/agents/${agentId}/chat`,
+  chatUrl: (agentId: string) => `${basename}/api/agents/${agentId}/chat`,
 
   connections: {
     list: async (): Promise<LlmConnection[]> => {
