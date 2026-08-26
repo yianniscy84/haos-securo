@@ -6,6 +6,7 @@
 - Expose MCP on port 8765 and proxy `/mcp` on the web port
 - Persist MCP JWT secret under `/data` so minted tokens survive restarts
 - Native (fastembed) embeddings remain unavailable on Alpine; use Ollama or OpenAI for RAG
+- Document how to enable MCP, mint a token, and connect Claude/HA clients (mapped ports, not ingress)
 
 ## 0.26.10
 

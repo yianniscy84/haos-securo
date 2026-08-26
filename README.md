@@ -1,6 +1,6 @@
 # Securo — Home Assistant Addon
 
-Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL, Redis, FastAPI backend, React frontend, Celery worker+beat.
+Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL, Redis, FastAPI backend, React frontend, Celery worker+beat, and an optional MCP server.
 
 ![Securo](securo/icon.png)
 
@@ -71,6 +71,13 @@ Off by default. Enable `agents_enabled` to start the MCP server and Agents UI.
 | `agents_external_mcp_url` | Public MCP URL shown in the UI | `""` |
 | `agents_extra_mcp_servers` | Extra MCP servers `URL[|name],...` | `""` |
 | `agents_embedding_provider` | Embeddings: `ollama`, `openai`, or `openai_compatible` | `ollama` |
+| `agents_default_provider` | In-app LLM: `openai`, `anthropic`, `ollama`, `openai_compatible` | `""` |
+| `agents_default_model` | Default model name for in-app agents | `""` |
+| `agents_openai_api_key` | OpenAI API key | `""` |
+| `agents_anthropic_api_key` | Anthropic API key | `""` |
+| `agents_ollama_base_url` | Ollama URL reachable from the addon | `""` |
+| `agents_openai_compat_base_url` | OpenAI-compatible API base URL | `""` |
+| `agents_openai_compat_api_key` | OpenAI-compatible API key | `""` |
 
 Point Claude Desktop, Cursor, n8n, or Home Assistant’s MCP client at `http://<ha-host>:8765/mcp` or `http://<ha-host>:<port-80>/mcp` with a Bearer token minted in **Agents → Connections**. Do not use the HA ingress URL. Native/fastembed embeddings are not available on Alpine.
 

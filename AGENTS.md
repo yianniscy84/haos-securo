@@ -53,7 +53,7 @@ Frontend: edit `securo/frontend/package.json`, run `npm install` in that directo
 
 Tag push triggers `.github/workflows/build.yaml`. Push a tag to release:
 ```bash
-git tag 0.26.1 && git push origin 0.26.1
+git tag 0.27.0 && git push origin 0.27.0
 ```
 
 **Image-based addon**: `config.yaml` has `image: ghcr.io/yianniscy84/haos-securo`. HAOS pulls pre-built images from GHCR instead of building locally. To release:

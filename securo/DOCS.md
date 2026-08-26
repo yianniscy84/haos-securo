@@ -54,30 +54,76 @@ Delegate login to an external OIDC provider:
 
 ### AI agents and MCP (Optional)
 
-Off by default. Set `agents_enabled` to `true` to start the built-in MCP server and mount the Agents UI (token minting lives under **Agents → Connections → External MCP access**).
+Off by default so the addon stays light. Enable **AI Agents and MCP** (`agents_enabled`) and restart to:
+
+1. Start the built-in MCP server (`uvicorn mcp_server.main:app` on port 8765)
+2. Mount the Agents UI, including token minting
+
+MCP is the same feature as [upstream Securo](https://github.com/securo-finance/securo): JSON-RPC 2.0 over HTTP `POST /mcp`, authenticated with a JWT. In-app LLM chat is unused until you add a provider.
+
+#### Options
 
 | Option | Description |
 |---|---|
-| `agents_enabled` | Enable agents + MCP |
-| `agents_mcp_jwt_secret` | MCP token signing secret. Leave empty to auto-generate and persist |
+| `agents_enabled` | Master switch for agents + MCP |
+| `agents_mcp_jwt_secret` | MCP token signing secret. Leave empty to auto-generate and persist under `/data` |
 | `agents_external_mcp_url` | Public MCP URL shown in the UI. If empty, derived from `frontend_url` as `{frontend_url}/mcp` |
 | `agents_extra_mcp_servers` | Extra MCP servers: `URL[|name],...` |
 | `agents_embedding_provider` | `ollama`, `openai`, or `openai_compatible` (not `native`) |
+| `agents_default_provider` | In-app LLM: `openai`, `anthropic`, `ollama`, `openai_compatible` |
+| `agents_default_model` | Default model name for in-app agents |
+| `agents_openai_api_key` | OpenAI API key |
+| `agents_anthropic_api_key` | Anthropic API key |
+| `agents_ollama_base_url` | Ollama URL reachable from the addon (e.g. `http://host.docker.internal:11434`) |
+| `agents_openai_compat_base_url` | OpenAI-compatible API base URL |
+| `agents_openai_compat_api_key` | OpenAI-compatible API key |
 
-MCP clients (Claude Desktop, Cursor, n8n, Home Assistant’s MCP integration) must use a **mapped host port**, not the Home Assistant sidebar ingress URL:
+Set `frontend_url` to the URL you use for the web UI (not HA ingress), so the External MCP panel shows a reachable endpoint.
 
-- `http://<ha-host>:8765/mcp`
-- or `http://<ha-host>:<mapped-port-80>/mcp`
+#### Connect an MCP client
 
-Mint a JWT in the Securo UI, then send it as `Authorization: Bearer <token>`. Ingress is for the web UI only.
+1. Map **port 8765** (and/or use `/mcp` on the mapped web port 80) in the addon Network settings.
+2. Open Securo (sidebar or `http://<ha-host>:80`), go to **Agents → Connections → External MCP access**, and generate a token. Copy it now — it is not stored.
+3. Point the client at one of:
+   - `http://<ha-host>:8765/mcp`
+   - `http://<ha-host>:<mapped-port-80>/mcp`
+4. Send `Authorization: Bearer <token>` on every request.
 
-Knowledge-base RAG cannot use the default native/fastembed embedder on this Alpine image (`onnxruntime` has no musl wheel). Point `agents_embedding_provider` at Ollama or OpenAI if you need embeddings.
+**Do not use the Home Assistant sidebar ingress URL** for Claude Desktop, Cursor, n8n, or Home Assistant’s MCP integration. Ingress is cookie-based and is for the web UI only.
+
+Example `tools/list` check:
+
+```bash
+curl -X POST http://<ha-host>:8765/mcp \
+  -H "Authorization: Bearer <token>" \
+  -H "Content-Type: application/json" \
+  -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+```
+
+Claude Desktop / Cursor snippet (paste into MCP config after minting a token):
+
+```json
+{
+  "mcpServers": {
+    "securo": {
+      "url": "http://<ha-host>:8765/mcp",
+      "headers": { "Authorization": "Bearer <token>" }
+    }
+  }
+}
+```
+
+#### Embeddings (knowledge base)
+
+Native/fastembed embeddings are **not available** on this Alpine image (`onnxruntime` has no musl wheel). For agent knowledge-base RAG, set `agents_embedding_provider` to `ollama`, `openai`, or `openai_compatible`.
 
 ## Accessing the App
 
 After installation, Securo is available:
-- In the **Home Assistant sidebar** (if ingress is enabled)
-- On **port 80** of your Home Assistant host
+
+- In the **Home Assistant sidebar** (ingress — web UI only)
+- On **port 80** of your Home Assistant host (web UI; `/mcp` when agents are enabled)
+- On **port 8765** when agents are enabled (MCP JSON-RPC; JWT required)
 
 Create your first account by opening the app and registering.
 
