@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.26.8
+
+- Fix account detail page crash when `account.type` is empty string
+
 ## 0.26.7
 
 - Fix account detail page crash when projected transactions data is not an array
