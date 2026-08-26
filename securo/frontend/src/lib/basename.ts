@@ -1,4 +1,4 @@
-// Detect Home Assistant ingress base path (e.g. /2afa7cbc_securo).
+// Detect Home Assistant ingress base path (e.g. /api/hassio_ingress/<token>).
 // Falls back to empty string for direct access (no prefix).
 export const basename =
-  window.location.pathname.match(/\/[a-f0-9]+_[a-z][a-z0-9-]*/)?.[0] ?? ''
+  window.location.pathname.match(/\/api\/hassio_ingress\/[A-Za-z0-9_-]+/)?.[0] ?? ''
