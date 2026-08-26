@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.27.1
+
+- Fix blank page on nested routes (e.g. `/agents/connections`) when static assets resolved as `/agents/static/...`
+
 ## 0.27.0
 
 - Opt-in AI agents and built-in MCP server (`agents_enabled`)
