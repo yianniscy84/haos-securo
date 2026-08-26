@@ -634,7 +634,7 @@ export default function AccountDetailPage() {
   // Virtual: rendered with a "Previsão" badge, non-clickable, and merged
   // into displayRows where running balances are computed for them.
   const projectedRows = useMemo((): TxWithBalance[] => {
-    if (!projectedTxData) return []
+    if (!Array.isArray(projectedTxData)) return []
     const unmaterialized = excludeMaterializedProjections(
       projectedTxData,
       txData?.items ?? [],
