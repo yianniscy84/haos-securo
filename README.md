@@ -69,7 +69,7 @@ For more information, see the official [Home Assistant documentation](https://ww
 
 # Available Apps
 
-## Securo
+## [Securo](securo/)
 
 <p align="center">
   <img src="securo/icon.png" alt="Securo" width="100">
@@ -102,7 +102,7 @@ Securo provides a complete personal finance experience with support for:
 
 ---
 
-## Securo Test
+## [Securo Test](securo-test/)
 
 <p align="center">
   <img src="securo-test/icon.png" alt="Securo Test" width="100">
@@ -169,7 +169,3 @@ When reporting an issue, please include:
 These apps are provided as-is. Always keep appropriate backups of important data before installing or upgrading add-ons, especially experimental versions.
 
 ---
-
-<p align="center">
-  Made for <a href="https://www.home-assistant.io/">Home Assistant</a>
-</p>
