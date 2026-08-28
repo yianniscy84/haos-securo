@@ -45,4 +45,4 @@ RUN mkdir -p /data /var/log/nginx /run/nginx \
 
 EXPOSE 20128
 
-ENTRYPOINT ["/run.sh"]
+CMD ["/run.sh"]

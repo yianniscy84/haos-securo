@@ -20,7 +20,6 @@ map:
   - type: share
     read_only: false
 apparmor: true
-webui: "http://[HOST]:[PORT:20128]/"
 ingress: true
 ingress_port: 80
 ingress_entry: /
