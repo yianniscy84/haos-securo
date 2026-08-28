@@ -8,11 +8,14 @@ FROM ${BUILD_FROM}
 # Switch to root for all setup
 USER root
 
-# Install runtime dependencies (Redis, bash, python3 for bashio stub)
+# Install runtime dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     redis-server \
+    nginx \
+    curl \
     python3 \
+    tzdata \
     && rm -rf /var/lib/apt/lists/*
 
 # Stubs for bashio + with-contenv (local / non-HA builds).
@@ -22,7 +25,7 @@ RUN sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-st
     && cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv \
     && chmod +x /usr/bin/with-contenv
 
-ARG BUILD_VERSION=0.3.2
+ARG BUILD_VERSION=0.3.3
 ARG BUILD_ARCH=amd64
 
 LABEL \
@@ -42,4 +45,4 @@ RUN mkdir -p /data /var/log/nginx /run/nginx \
 
 EXPOSE 20128
 
-CMD ["/run.sh"]
+ENTRYPOINT ["/run.sh"]

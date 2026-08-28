@@ -75,6 +75,10 @@ export NODE_OPTIONS="--max-old-space-size=1024"
 # Redis
 export REDIS_URL="redis://127.0.0.1:6379"
 
+# Reverse proxy support (HAOS ingress)
+export OMNIROUTE_BASE_PATH=""
+export NEXT_PUBLIC_BASE_URL="http://localhost:80"
+
 # --------------------------------------------------------------------------
 # Start Redis
 # --------------------------------------------------------------------------
@@ -89,6 +93,14 @@ else
     bashio::log.error "Redis failed to start!"
     exit 1
 fi
+
+# --------------------------------------------------------------------------
+# Start Nginx
+# --------------------------------------------------------------------------
+bashio::log.info "Starting Nginx..."
+mkdir -p /run/nginx
+nginx
+bashio::log.info "Nginx started on port 80."
 
 # --------------------------------------------------------------------------
 # Start OmniRoute
