@@ -6,7 +6,7 @@ This file tracks the upstream `securo-finance/securo` version each addon is base
 
 | Addon | Upstream Version | Addon Version | Last Synced |
 |-------|-----------------|---------------|-------------|
-| `securo/` (production) | v0.14.4 | 0.28.1 | 2026-08-28 |
+| `securo/` (production) | v0.14.5 | 0.29.0 | 2026-08-28 |
 | `securo-test/` (test) | v0.14.5 | 0.29.0 | 2026-08-28 |
 
 The production and test addons track different upstream versions. Test gets updates first; production is synced after testing.

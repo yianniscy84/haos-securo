@@ -1,11 +1,23 @@
 # Changelog
 
-## 0.28.1
+## 0.29.0
 
-- Change default web port from 80 to 8080 to avoid conflict with HAOS
-- Consolidate test addon into single repository (users add one URL, get both addons)
-- Remove GHCR image-based builds — both addons now build from source locally
-- Add "Securo Test" as experimental addon (ports: 81, 8766)
+- Sync with upstream securo v0.14.5
+- New: OIDC-only local auth toggle (`local_auth_enabled`)
+- New: Encrypted workspace backups with password (AES-256 via pyzipper)
+- New: Rule preview before saving
+- New: Dashboard calendar/list view for period transactions
+- New: Investment order import from broker CSV
+- New: Nested AND/OR rule condition groups
+- New: Dutch (nl) translations
+- New: Vietnamese Dong (VND) and Singapore Dollar (SGD) support
+- New: Hidable default categories
+- Fix: Reject unsafe regex rule patterns
+- Fix: Confirm destructive deletions
+- Fix: Pluggy savings subtypes mapping
+- Fix: SimpleFIN institutions as first-class rows
+- Update: React 19, Zod v4, Tailwind v4, Vite 7
+- Update: Supply chain hardening for frontend dependencies
 
 ## 0.27.1
 

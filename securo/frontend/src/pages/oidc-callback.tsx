@@ -1,7 +1,6 @@
 import { useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '@/contexts/auth-context'
-import { basename } from '@/lib/basename'
 import { Card, CardContent } from '@/components/ui/card'
 import { ShellLogo } from '@/components/shell-logo'
 
@@ -16,7 +15,7 @@ export default function OIDCCallbackPage() {
   useEffect(() => {
     if (!accessToken) return
     loginWithToken(accessToken)
-    window.history.replaceState(null, '', `${basename}/auth/oidc/callback`)
+    window.history.replaceState(null, '', '/auth/oidc/callback')
     navigate('/', { replace: true })
   }, [accessToken, loginWithToken, navigate])
 
