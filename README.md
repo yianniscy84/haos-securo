@@ -86,7 +86,7 @@ Securo provides a complete personal finance experience with support for:
 - Budgets
 - Financial goals
 - Reports and analytics
-- Optional MCP integration
+- Optional MCP integration (WIP, untested)
 
 **Upstream project:** [securo-finance/securo](https://github.com/securo-finance/securo)
 
@@ -121,7 +121,7 @@ It provides the same core functionality as Securo:
 - Budgets
 - Financial goals
 - Reports and analytics
-- Optional MCP integration
+- Optional MCP integration (WIP, untested)
 
 > **Warning:** This is a test version. It may contain experimental changes and should not be relied upon for critical data.
 
