@@ -1,7 +1,7 @@
 # Home Assistant Apps by yianniscy84
 
 <p align="center">
-  <img src="https://www.home-assistant.io/images/home-assistant-logo.svg" alt="Home Assistant" width="120">
+  <img src="https://camo.githubusercontent.com/3cfef02c675957130352d76646819bbada6eac32a573ca17e5d4c0edc56b0554/68747470733a2f2f7777772e6f70656e686f6d65666f756e646174696f6e2e6f72672f6261646765732f686f6d652d617373697374616e742e706e67" alt="Home Assistant" width="120">
 </p>
 
 <p align="center">
@@ -43,8 +43,10 @@ Contributions are welcome! If you'd like to help improve these apps, feel free t
 
 If you find these apps useful, consider supporting the project:
 
+<p align="center">
 <a href="https://www.buymeacoffee.com/yianniscy84" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"></a>
 <a href="https://www.paypal.me/ioannisioannou" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-00457C?style=flat&logo=paypal&logoColor=white" alt="Donate with PayPal" height="40"></a>
+</p>
 
 ---
 
