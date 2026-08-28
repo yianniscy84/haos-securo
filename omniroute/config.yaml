@@ -1,0 +1,40 @@
+name: "OmniRoute"
+description: >-
+  Free AI gateway: one endpoint, 350+ providers, 1200+ models.
+  Configure providers, API keys, and routing through the dashboard after install.
+version: "3.8.50"
+slug: "omniroute"
+init: false
+arch:
+  - amd64
+  - aarch64
+  - armv7
+startup: application
+boot: auto
+ports:
+  20128/tcp: 20128
+ports_description:
+  20128/tcp: "OmniRoute dashboard and API"
+host_network: false
+map:
+  - type: share
+    read_only: false
+apparmor: true
+webui: "http://[HOST]:[PORT:20128]/"
+ingress: true
+ingress_port: 80
+ingress_entry: /
+panel_icon: mdi:route
+panel_title: "OmniRoute"
+backup: hot
+stage: stable
+
+options:
+  initial_password: ""
+  require_api_key: false
+  auth_cookie_secure: false
+
+schema:
+  initial_password: password
+  require_api_key: bool
+  auth_cookie_secure: bool

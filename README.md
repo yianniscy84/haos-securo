@@ -156,6 +156,72 @@ It provides the same core functionality as Securo:
 
 ---
 
+## [OmniRoute](omniroute/)
+
+<p align="center">
+  <img src="omniroute/icon.png" alt="OmniRoute" width="100">
+</p>
+
+**Free AI gateway: one endpoint, 350+ providers, 1200+ models for Home Assistant.**
+
+OmniRoute is an open-source AI gateway that routes LLM requests through one OpenAI-compatible endpoint. It supports 350+ providers (90+ free tiers), 1200+ models, and works with Claude Code, Codex, Cursor, OpenCode, Cline, Copilot, and any OpenAI-compatible tool.
+
+- Auto-fallback routing across providers
+- 19 routing strategies (priority, weighted, cost-optimized, auto, etc.)
+- Full dashboard UI for managing providers and keys
+- OpenAI-compatible API (`/v1/chat/completions`)
+- MCP & A2A agent protocol support
+- RTK + Caveman compression (15–95% token savings)
+- Zero-config start with free providers
+
+**Upstream project:** [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+
+### Add-on information
+
+| Property | Value |
+|----------|--------|
+| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute%2Fconfig.yaml&color=brightgreen) |
+| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute%2Fupdater.json&color=blue) |
+| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute%2Fupdater.json&color=grey) |
+| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) |
+| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
+
+---
+
+## [OmniRoute Test](omniroute-test/)
+
+<p align="center">
+  <img src="omniroute-test/icon.png" alt="OmniRoute Test" width="100">
+</p>
+
+**Free AI gateway (TEST) — pre-release version tracking upstream release branch.**
+
+This version is intended for testing newer or experimental changes before they are included in the stable OmniRoute add-on.
+
+It provides the same core functionality as OmniRoute:
+
+- 350+ providers, 1200+ models
+- Auto-fallback routing
+- Dashboard UI for providers and keys
+- OpenAI-compatible API
+- MCP & A2A support
+
+> **Warning:** This is a test version. It may contain experimental changes and should not be relied upon for critical workloads.
+
+**Upstream project:** [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+
+### Add-on information
+
+| Property | Value |
+|----------|--------|
+| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fconfig.yaml&color=brightgreen) |
+| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fupdater.json&color=blue) |
+| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fupdater.json&color=grey) |
+| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) |
+| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
+
+---
+
 ## Support
 
 Need help or found a problem?
