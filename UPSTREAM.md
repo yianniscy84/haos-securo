@@ -17,8 +17,8 @@ The production and test addons track different upstream versions. Test gets upda
 
 | Addon | Upstream Version | Addon Version | Last Synced |
 |-------|-----------------|---------------|-------------|
-| `omniroute/` (production) | v3.8.50 | 3.8.50 | 2026-08-28 |
-| `omniroute-test/` (test) | release branch | 3.8.50 | 2026-08-28 |
+| `omniroute/` (production) | v3.8.50 | 0.1.0 | 2026-08-28 |
+| `omniroute-test/` (test) | release branch | 0.1.0 | 2026-08-28 |
 
 The production addon pins a specific release tag. The test addon tracks the upstream `release` branch (pre-release).
 

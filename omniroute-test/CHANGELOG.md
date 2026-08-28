@@ -1,6 +1,6 @@
 # Changelog
 
-## 3.8.50
+## 0.1.0
 
 - Initial release as a Home Assistant addon (test/pre-release)
 - OmniRoute v3.8.50 (release branch) — 350+ providers, 1200+ models, auto-fallback routing
