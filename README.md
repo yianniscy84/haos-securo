@@ -2,7 +2,7 @@
 
 <!-- markdownlint-disable MD033 -->
 
-## Apps (add-ons) informations
+## Apps (add-ons) information
 
 ![update-badge](https://img.shields.io/github/last-commit/yianniscy84/hassio-addons?label=last%20update)
 
