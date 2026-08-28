@@ -5,12 +5,18 @@ ARG BUILD_FROM=diegosouzapw/omniroute:latest
 # ============================================================================
 FROM ${BUILD_FROM}
 
+# Switch to root for package installation
+USER root
+
 # Install runtime dependencies (Redis, bash, python3 for bashio stub)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     redis-server \
     python3 \
     && rm -rf /var/lib/apt/lists/*
+
+# Switch back to node user
+USER node
 
 # Stubs for bashio + with-contenv (local / non-HA builds).
 COPY bashio_stub.sh /usr/local/lib/bashio_stub.sh
