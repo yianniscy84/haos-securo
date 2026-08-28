@@ -1,6 +1,6 @@
 # ⚠️ Test Version
 
-This is a pre-release test version of the OmniRoute addon. It tracks the upstream `release` branch and may contain experimental features or bugs. For production use, install the stable **OmniRoute** addon instead.
+This is a pre-release test version of the OmniRoute addon. It tracks the upstream `main` branch and may contain experimental features or bugs. For production use, install the stable **OmniRoute** addon instead.
 
 ---
 

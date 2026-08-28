@@ -1,7 +1,7 @@
 name: "OmniRoute Test"
 description: >-
   Free AI gateway (TEST). One endpoint, 350+ providers, 1200+ models.
-  This is a pre-release/test version — tracks the upstream release branch.
+  This is a pre-release/test version — tracks the upstream main branch.
   Configure providers, API keys, and routing through the dashboard after install.
 version: "0.1.0"
 slug: "omniroute-test"
