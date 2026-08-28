@@ -17,8 +17,8 @@ The production and test addons track different upstream versions. Test gets upda
 
 | Addon | Upstream Version | Addon Version | Last Synced |
 |-------|-----------------|---------------|-------------|
-| `omniroute/` (production) | v3.8.50 | 0.3.3 | 2026-08-28 |
-| `omniroute-test/` (test) | v3.8.50 | 0.3.3 | 2026-08-28 |
+| `omniroute/` (production) | v3.8.50 | 0.3.4 | 2026-08-28 |
+| `omniroute-test/` (test) | v3.8.50 | 0.3.4 | 2026-08-28 |
 
 Both addons clone from upstream Git tags. Bump `OMNIROUTE_VERSION` in the Dockerfile to update.
 
