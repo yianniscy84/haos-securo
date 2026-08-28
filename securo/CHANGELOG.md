@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.28.1
+
+- Change default web port from 80 to 8080 to avoid conflict with HAOS
+- Consolidate test addon into single repository (users add one URL, get both addons)
+- Remove GHCR image-based builds — both addons now build from source locally
+- Add "Securo Test" as experimental addon (ports: 81, 8766)
+
 ## 0.27.1
 
 - Fix blank page on nested routes (e.g. `/agents/connections`) when static assets resolved as `/agents/static/...`
