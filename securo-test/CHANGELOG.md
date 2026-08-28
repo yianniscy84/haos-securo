@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.29.0
+
+- Sync with upstream securo v0.14.5
+- New: OIDC-only local auth toggle (`local_auth_enabled`)
+- New: Encrypted workspace backups with password (AES-256 via pyzipper)
+- New: Rule preview before saving
+- New: Dashboard calendar/list view for period transactions
+- New: Investment order import from broker CSV
+- New: Nested AND/OR rule condition groups
+- New: Dutch (nl) translations
+- New: Vietnamese Dong (VND) and Singapore Dollar (SGD) support
+- New: Hidable default categories
+- Fix: Reject unsafe regex rule patterns
+- Fix: Confirm destructive deletions
+- Fix: Pluggy savings subtypes mapping
+- Fix: SimpleFIN institutions as first-class rows
+- Update: React 19, Zod v4, Tailwind v4, Vite 7
+- Update: Supply chain hardening for frontend dependencies
+
 ## 0.27.1
 
 - Fix blank page on nested routes (e.g. `/agents/connections`) when static assets resolved as `/agents/static/...`

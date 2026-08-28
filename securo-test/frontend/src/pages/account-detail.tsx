@@ -634,7 +634,7 @@ export default function AccountDetailPage() {
   // Virtual: rendered with a "Previsão" badge, non-clickable, and merged
   // into displayRows where running balances are computed for them.
   const projectedRows = useMemo((): TxWithBalance[] => {
-    if (!Array.isArray(projectedTxData)) return []
+    if (!projectedTxData) return []
     const unmaterialized = excludeMaterializedProjections(
       projectedTxData,
       txData?.items ?? [],
@@ -884,7 +884,7 @@ export default function AccountDetailPage() {
             </h1>
             <div className="flex items-center gap-2 mt-1 overflow-hidden">
               <span className="text-xs font-medium text-muted-foreground">
-                {t(`accounts.type${(account.type ?? '').split('_').filter(Boolean).map(s => s[0].toUpperCase() + s.slice(1)).join('')}`, account.type ?? '')}
+                {t(`accounts.type${account.type.split('_').map(s => s[0].toUpperCase() + s.slice(1)).join('')}`, account.type)}
               </span>
               {isCreditCard && account.next_due_date && (() => {
                 const d = daysUntil(account.next_due_date)

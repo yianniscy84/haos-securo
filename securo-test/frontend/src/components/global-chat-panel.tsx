@@ -311,9 +311,9 @@ export function GlobalChatPanel({ open, onOpenChange }: Props) {
                     'No agent available. Create one in the Agents page to enable the global chat.',
                   )}
                 </span>
-                <Link to="/agents" className="underline text-foreground">
+                <a href="/agents" className="underline text-foreground">
                   {t('agents.globalChat.openAgents', 'Go to Agents')}
-                </Link>
+                </a>
               </div>
             )}
             {activeAgent && view === 'chat' && (
