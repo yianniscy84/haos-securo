@@ -5,7 +5,7 @@ ARG BUILD_FROM=diegosouzapw/omniroute:latest
 # ============================================================================
 FROM ${BUILD_FROM}
 
-# Switch to root for package installation
+# Switch to root for all setup
 USER root
 
 # Install runtime dependencies (Redis, bash, python3 for bashio stub)
@@ -15,19 +15,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3 \
     && rm -rf /var/lib/apt/lists/*
 
-# Switch back to node user
-USER node
-
 # Stubs for bashio + with-contenv (local / non-HA builds).
 COPY bashio_stub.sh /usr/local/lib/bashio_stub.sh
 COPY with-contenv   /usr/local/lib/with-contenv-stub
-RUN if ! command -v with-contenv >/dev/null 2>&1; then \
-      sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-stub; \
-      cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv; \
-      chmod +x /usr/bin/with-contenv; \
-    fi
+RUN sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-stub \
+    && cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv \
+    && chmod +x /usr/bin/with-contenv
 
-ARG BUILD_VERSION=0.2.0
+ARG BUILD_VERSION=0.3.0
 ARG BUILD_ARCH=amd64
 
 LABEL \
@@ -43,6 +38,9 @@ RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 # Persistent data directory
 RUN mkdir -p /data /var/log/nginx /run/nginx \
     && echo '{}' > /data/options.json
+
+# Switch back to node user
+USER node
 
 EXPOSE 20128
 
