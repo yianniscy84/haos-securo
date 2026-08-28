@@ -18,9 +18,9 @@ The production and test addons track different upstream versions. Test gets upda
 | Addon | Upstream Version | Addon Version | Last Synced |
 |-------|-----------------|---------------|-------------|
 | `omniroute/` (production) | v3.8.50 | 0.1.0 | 2026-08-28 |
-| `omniroute-test/` (test) | main branch | 0.1.0 | 2026-08-28 |
+| `omniroute-test/` (test) | v3.8.50 | 0.1.0 | 2026-08-28 |
 
-The production addon pins a specific release tag. The test addon tracks the upstream `main` branch (latest development).
+Both addons clone from upstream Git tags. Bump `OMNIROUTE_VERSION` in the Dockerfile to update.
 
 ## Upstream Repos
 
@@ -44,8 +44,7 @@ The production addon pins a specific release tag. The test addon tracks the upst
 ### OmniRoute
 
 - Source is cloned from upstream during `docker build` (not committed to this repo)
-- Production addon clones a specific release tag (`release/v{VERSION}`)
-- Test addon clones the `main` branch (latest development)
+- Both addons clone a specific Git tag (`v{VERSION}`) — bump the `OMNIROUTE_VERSION` build arg to update
 - HAOS-specific files are maintained in this repo:
   - `*/run.sh` — entry script (bashio, Redis, secrets generation)
   - `*/config.yaml` — addon manifest (ports, options, schema)

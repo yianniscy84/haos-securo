@@ -10,9 +10,10 @@ RUN apk add --no-cache python3 make g++
 
 WORKDIR /src
 
-# Clone OmniRoute source (main branch for pre-release testing)
+# Clone OmniRoute source (latest tag for pre-release testing)
+ARG OMNIROUTE_VERSION=3.8.50
 RUN apk add --no-cache git \
-    && git clone --depth 1 --branch main \
+    && git clone --depth 1 --branch v${OMNIROUTE_VERSION} \
        https://github.com/diegosouzapw/OmniRoute.git . \
     && rm -rf .git
 
