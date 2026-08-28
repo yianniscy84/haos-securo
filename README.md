@@ -44,6 +44,7 @@ Contributions are welcome! If you'd like to help improve these apps, feel free t
 If you find these apps useful, consider supporting the project:
 
 <a href="https://www.buymeacoffee.com/yianniscy84" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40"></a>
+<a href="https://www.paypal.me/ioannisioannou" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-00457C?style=flat&logo=paypal&logoColor=white" alt="Donate with PayPal" height="40"></a>
 
 ---
 
