@@ -22,7 +22,7 @@ RUN sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-st
     && cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv \
     && chmod +x /usr/bin/with-contenv
 
-ARG BUILD_VERSION=0.3.0
+ARG BUILD_VERSION=0.3.1
 ARG BUILD_ARCH=amd64
 
 LABEL \
@@ -35,8 +35,9 @@ COPY nginx.conf /etc/nginx/nginx.conf
 COPY run.sh /run.sh
 RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 
-# Persistent data directory
+# Persistent data directory — owned by node so OmniRoute can write
 RUN mkdir -p /data /var/log/nginx /run/nginx \
+    && chown -R node:node /data \
     && echo '{}' > /data/options.json
 
 # Switch back to node user
