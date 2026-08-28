@@ -8,6 +8,9 @@ init: false
 arch:
   - amd64
   - aarch64
+  - armhf
+  - armv7
+  - i386
 startup: application
 boot: auto
 ports:

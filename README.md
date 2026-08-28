@@ -38,6 +38,9 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+![armhf][armhf-badge]
+![armv7][armv7-badge]
+![i386][i386-badge]
 ![ingress][ingress-badge]
 
 &#10003;  [Securo Test](securo-test/) : Self-hosted personal finance manager (TEST). Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP. This is a test/experimental version. | [Upstream](https://github.com/securo-finance/securo)
@@ -47,6 +50,9 @@ If you want to do add the repository manually, please follow the procedure highl
 ![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json)
 ![aarch64][aarch64-badge]
 ![amd64][amd64-badge]
+![armhf][armhf-badge]
+![armv7][armv7-badge]
+![i386][i386-badge]
 ![ingress][ingress-badge]
 
 
@@ -61,6 +67,9 @@ You have several options to get them answered:
 
 [aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg?logo=arm
 [amd64-badge]: https://img.shields.io/badge/amd64--green.svg?logo=amd
+[armhf-badge]: https://img.shields.io/badge/armhf--green.svg?logo=arm
+[armv7-badge]: https://img.shields.io/badge/armv7--green.svg?logo=arm
+[i386-badge]: https://img.shields.io/badge/i386--green.svg?logo=intel
 [ingress-badge]: https://img.shields.io/badge/-ingress-blueviolet.svg?logo=Ingress
 [forum]: https://community.home-assistant.io/t/securo
 [repository-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
