@@ -77,7 +77,8 @@ export REDIS_URL="redis://127.0.0.1:6379"
 # Start Redis
 # --------------------------------------------------------------------------
 bashio::log.info "Starting Redis..."
-redis-server --daemonize yes --dir /data --appendonly no --save "" --port 6379 --bind 127.0.0.1
+mkdir -p /run/redis
+redis-server --daemonize yes --dir /tmp --appendonly no --save "" --port 6379 --bind 127.0.0.1 --pidfile /run/redis/redis.pid
 sleep 1
 
 # Verify Redis is running
