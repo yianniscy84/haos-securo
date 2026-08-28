@@ -2,7 +2,7 @@ name: "Securo"
 description: >-
   Self-hosted personal finance manager. Multi-account tracking,
   transaction imports, bank sync, budgets, goals, reports, and optional MCP.
-version: "0.28.0"
+version: "0.28.1"
 slug: "securo"
 init: false
 arch:
@@ -11,7 +11,7 @@ arch:
 startup: application
 boot: auto
 ports:
-  80/tcp: 80
+  80/tcp: 8080
   8765/tcp: 8765
 ports_description:
   80/tcp: "Securo web interface (also /mcp when agents are enabled)"
