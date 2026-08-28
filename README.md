@@ -31,7 +31,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ## Apps (add-ons) provided by this repository
 
 
-&#10003;  [Securo](securo/) : Self-hosted personal finance manager. Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP.
+&#10003;  [Securo](securo/) : Self-hosted personal finance manager. Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP. | [Upstream](https://github.com/securo-finance/securo)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version%20(add--on)&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fconfig.yaml)
 ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fupdater.json)
@@ -40,7 +40,7 @@ If you want to do add the repository manually, please follow the procedure highl
 ![amd64][amd64-badge]
 ![ingress][ingress-badge]
 
-&#10003;  [Securo Test](securo-test/) : Self-hosted personal finance manager (TEST). Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP. This is a test/experimental version.
+&#10003;  [Securo Test](securo-test/) : Self-hosted personal finance manager (TEST). Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP. This is a test/experimental version. | [Upstream](https://github.com/securo-finance/securo)
 
 &emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version%20(add--on)&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fconfig.yaml)
 ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json)
