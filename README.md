@@ -1,164 +1,67 @@
-# Securo — Home Assistant Addon
+# Home assistant apps (add-ons) by yianniscy84
 
-Self-hosted personal finance manager for Home Assistant. All-in-one: PostgreSQL, Redis, FastAPI backend, React frontend, Celery worker+beat, and an optional MCP server.
+<!-- markdownlint-disable MD033 -->
 
-![Securo](securo/icon.png)
+## Apps (add-ons) informations
 
-## Features
+![update-badge](https://img.shields.io/github/last-commit/yianniscy84/hassio-addons?label=last%20update)
 
-- Multi-account tracking with running balances
-- Transaction management with search, filters, and CSV export
-- File import: OFX, QIF, CAMT, CSV
-- Auto-categorization rules engine
-- Recurring transactions and budgets
-- Goals and savings targets with progress tracking
-- Asset management with valuation tracking
-- Reports: Net Worth, Income vs Expenses
-- Bank sync via Pluggy, Enable Banking, or SimpleFIN
-- Multi-currency support with automatic FX conversion
-- 2FA (TOTP), passkeys, and OIDC login
-- Multi-user support with admin panel
-- Optional AI agents and MCP (opt-in via `agents_enabled`)
+## About
+
+Home Assistant allows anyone to create apps (add-ons) repositories to share their
+apps (add-ons) for Home Assistant easily. This repository is one of those repositories,
+providing extra Home Assistant apps (add-ons) for your installation.
+
+The primary goal of this project is to provide you (as a Home Assistant user)
+with additional, high quality, apps (add-ons) that allow you to take your automated
+home to the next level.
 
 ## Installation
 
-### Add-on Store (recommended)
+[![Add repository on my Home Assistant][repository-badge]][repository-url]
 
-1. Open **Settings → Add-ons → Add-on Store**
-2. Click the three dots (⋮) → **Repositories**
-3. Add `https://github.com/yianniscy84/haos-securo`
-4. Find **Securo** and install it
-5. Configure the options and start the addon
+If you want to do add the repository manually, please follow the procedure highlighted in the [Home Assistant website](https://home-assistant.io/hassio/installing_third_party_addons). Use the following URL to add this repository: https://github.com/yianniscy84/hassio-addons
 
-HAOS pulls pre-built images from GHCR — no local build required.
+## Statistics
 
-## Configuration
+### Number of apps (add-ons)
 
-| Option | Description | Default |
-|---|---|---|
-| `secret_key` | Session signing key. Leave empty to auto-generate. | `""` |
-| `frontend_url` | Public URL of the app | `""` |
-| `debug` | Enable debug logging | `false` |
-| `db_password` | PostgreSQL password | `postgres` |
+- In the repository : 2
 
-### Bank Sync
+## Apps (add-ons) provided by this repository
 
-| Option | Description |
-|---|---|
-| `pluggy_client_id` | Pluggy Client ID |
-| `pluggy_client_secret` | Pluggy Client Secret |
-| `enable_banking_app_id` | Enable Banking Application ID |
-| `simplefin_enabled` | Enable SimpleFIN (`true`/`false`) |
 
-### OIDC
+&#10003;  [Securo](securo/) : Self-hosted personal finance manager. Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP.
 
-| Option | Description |
-|---|---|
-| `oidc_enabled` | Enable OIDC login |
-| `oidc_provider_name` | Display name |
-| `oidc_discovery_url` | `.well-known/openid-configuration` URL |
-| `oidc_client_id` | OIDC client ID |
-| `oidc_client_secret` | OIDC client secret |
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version%20(add--on)&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fconfig.yaml)
+![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fupdater.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
 
-### AI agents and MCP
+&#10003;  [Securo Test](securo-test/) : Self-hosted personal finance manager (TEST). Multi-account tracking, transaction imports, bank sync, budgets, goals, reports, and optional MCP. This is a test/experimental version.
 
-Off by default. Enable `agents_enabled` to start the MCP server and Agents UI.
+&emsp;&emsp;![Version](https://img.shields.io/badge/dynamic/yaml?label=Version%20(add--on)&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fconfig.yaml)
+![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json)
+![Update](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json)
+![aarch64][aarch64-badge]
+![amd64][amd64-badge]
+![ingress][ingress-badge]
 
-| Option | Description | Default |
-|---|---|---|
-| `agents_enabled` | Enable AI agents and the built-in MCP server | `false` |
-| `agents_mcp_jwt_secret` | MCP JWT secret (auto-generated if empty) | `""` |
-| `agents_external_mcp_url` | Public MCP URL shown in the UI | `""` |
-| `agents_extra_mcp_servers` | Extra MCP servers `URL[|name],...` | `""` |
-| `agents_embedding_provider` | Embeddings: `ollama`, `openai`, or `openai_compatible` | `ollama` |
-| `agents_default_provider` | In-app LLM: `openai`, `anthropic`, `ollama`, `openai_compatible` | `""` |
-| `agents_default_model` | Default model name for in-app agents | `""` |
-| `agents_openai_api_key` | OpenAI API key | `""` |
-| `agents_anthropic_api_key` | Anthropic API key | `""` |
-| `agents_ollama_base_url` | Ollama URL reachable from the addon | `""` |
-| `agents_openai_compat_base_url` | OpenAI-compatible API base URL | `""` |
-| `agents_openai_compat_api_key` | OpenAI-compatible API key | `""` |
 
-Point Claude Desktop, Cursor, n8n, or Home Assistant’s MCP client at `http://<ha-host>:8765/mcp` or `http://<ha-host>:<port-80>/mcp` with a Bearer token minted in **Agents → Connections**. Do not use the HA ingress URL. Native/fastembed embeddings are not available on Alpine.
+## Support
 
-## Accessing the App
+Got questions?
 
-After installation, Securo is available:
+You have several options to get them answered:
 
-- **Home Assistant sidebar** — Ingress enabled by default (web UI only; not for MCP clients)
-- **Port 80** — Direct HTTP access on your HA host (`/mcp` when agents are enabled)
-- **Port 8765** — Built-in MCP JSON-RPC endpoint when agents are enabled
+- The Home Assistant [Community Forum][forum].
+- This repository issues list
 
-## Architecture
-
-```
-┌─────────────────────────────────────┐
-│         Home Assistant OS            │
-│                                      │
-│  ┌──────────────────────────────┐   │
-│  │      Securo Addon            │   │
-│  │                              │   │
-│  │  Nginx :80                   │   │
-│  │    ├── / → React SPA         │   │
-│  │    ├── /api/ → Uvicorn :8000 │   │
-│  │    ├── /ws/  → Uvicorn :8000 │   │
-│  │    └── /mcp  → MCP :8765     │   │
-│  │                              │   │
-│  │  PostgreSQL :5432            │   │
-│  │  Redis :6379                 │   │
-│  │  Celery worker + beat        │   │
-│  │  MCP server :8765 (opt-in)   │   │
-│  └──────────────────────────────┘   │
-└─────────────────────────────────────┘
-```
-
-## Development
-
-```bash
-# Build locally — run from the securo/ addon directory
-cd securo
-docker build -t securo-addon .
-
-# Run
-docker run -d --name securo-test \
-  -p 8080:80 \
-  -p 8765:8765 \
-  -v securo-data:/data \
-  securo-addon
-
-# Open http://localhost:8080
-```
-
-### Update Securo source
-
-```bash
-# Update bundled backend
-rm -rf securo/backend
-cp -r /path/to/securo/backend securo/backend
-
-# Update bundled frontend
-rm -rf securo/frontend
-cp -r /path/to/securo/frontend securo/frontend
-
-# Rebuild
-docker build -t securo-addon .
-```
-
-## Release
-
-```bash
-# 1. Bump version in securo/config.yaml
-# 2. Commit
-git add securo/config.yaml && git commit -m "release: 0.27.0"
-# 3. Tag + push
-git tag 0.27.0 && git push origin main --tags
-```
-
-CI builds multi-arch images (amd64 + aarch64) → GHCR. HAOS detects the version change and pulls the new image automatically.
-
-## Links
-
-- [Securo upstream](https://github.com/securo-finance/securo)
-- [Documentation](https://docs.usesecuro.com/)
-- [Discord](https://discord.gg/rUqTKtQ9S4)
-- [HA Addon Docs](https://developers.home-assistant.io/docs/apps/)
+[aarch64-badge]: https://img.shields.io/badge/aarch64--green.svg?logo=arm
+[amd64-badge]: https://img.shields.io/badge/amd64--green.svg?logo=amd
+[ingress-badge]: https://img.shields.io/badge/-ingress-blueviolet.svg?logo=Ingress
+[forum]: https://community.home-assistant.io/t/securo
+[repository-badge]: https://img.shields.io/badge/Add%20repository%20to%20my-Home%20Assistant-41BDF5?logo=home-assistant&style=for-the-badge
+[repository-url]: https://github.com/yianniscy84/hassio-addons
