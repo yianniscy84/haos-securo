@@ -2,7 +2,7 @@ name: "Securo Test"
 description: >-
   Self-hosted personal finance manager (TEST). Multi-account tracking,
   transaction imports, bank sync, budgets, goals, reports, and optional MCP.
-  This is a test/experimental version.
+  This is a test/experimental version
 version: "0.29.0"
 slug: "securo-test"
 init: false
