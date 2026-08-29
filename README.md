@@ -44,17 +44,11 @@ Contributions are welcome! If you'd like to help improve these apps, feel free t
 If you find these apps useful, consider supporting the project — pick whatever fits you:
 
 | Method | Description | Link |
-
 |--------|-------------|------|
-
 | ⭐ Star the repo | Free — genuinely helps visibility | [![Star](https://img.shields.io/github/stars/yianniscy84/hassio-addons?style=social)](https://github.com/yianniscy84/hassio-addons/stargazers) |
-
 | ☕ Buy Me a Coffee | Quick one-off tip, no signup for the donor | [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=white)](https://www.buymeacoffee.com/yianniscy84) |
-
 | 🍵 Ko-fi | Quick one-off tip, no signup for the donor | [![Ko-fi](https://img.shields.io/badge/Donate-Ko--fi-FF5E5B?style=flat&logo=kofi&logoColor=white)](https://ko-fi.com/yianniscy84) |
-
 | 🅿️ PayPal | Quick one-off tip | [![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://www.paypal.me/ioannisioannou) |
-
 ---
 
 ## Installation
@@ -117,19 +111,12 @@ Securo provides a complete personal finance experience with support for:
 ### Add-on information
 
 | Property | Value |
-
 |----------|--------|
-
 | **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fconfig.yaml&color=brightgreen) |
-
 | **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fupdater.json&color=blue) |
-
 | **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fupdater.json&color=grey) |
-
 | **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armhf](https://img.shields.io/badge/armhf-green.svg?logo=arm) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) ![i386](https://img.shields.io/badge/i386-green.svg?logo=intel) |
-
 | **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
-
 ---
 
 ## [OmniRoute](omniroute/)
@@ -157,19 +144,12 @@ OmniRoute is an open-source AI gateway that routes LLM requests through one Open
 ### Add-on information
 
 | Property | Value |
-
 |----------|--------|
-
 | **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fconfig.yaml&color=brightgreen) |
-
 | **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=blue) |
-
 | **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=grey) |
-
 | **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) |
-
 | **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
-
 ---
 
 ## Support
