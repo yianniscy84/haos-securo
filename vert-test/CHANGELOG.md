@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.1
+
+- Fix Dockerfile: clone VERT source from GitHub during build
+
 ## 0.1.0
 
 - Initial release of VERT Test addon
