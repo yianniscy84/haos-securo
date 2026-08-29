@@ -29,9 +29,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends git && \
     rm -rf /var/lib/apt/lists/*
 
-COPY package.json ./
+RUN git clone --depth 1 https://github.com/VERT-sh/VERT.git /app
+WORKDIR /app
 RUN bun install
-COPY . ./
 RUN bun run build
 
 # ============================================================================
