@@ -1,0 +1,36 @@
+name: "VERT"
+description: >-
+  Open-source file converter. Converts images, audio, documents via WebAssembly
+  and video via the vertd daemon. 250+ formats, fully local, no file size limits.
+version: "0.1.0"
+slug: "vert"
+init: false
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+ports:
+  3000/tcp: 3000
+ports_description:
+  3000/tcp: "VERT web interface"
+host_network: false
+map:
+  - type: share
+    read_only: false
+apparmor: true
+ingress: true
+ingress_port: 80
+ingress_entry: /
+panel_icon: mdi:file-replace
+panel_title: "VERT"
+backup: hot
+stage: stable
+
+options:
+  vertd_enabled: true
+  vertd_port: 24153
+
+schema:
+  vertd_enabled: bool
+  vertd_port: int

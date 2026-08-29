@@ -1,98 +1,134 @@
 # AGENTS.md
 
-## What This Is
+This repository contains **six Home Assistant OS addons** (no CI, no pre-built images — HAOS builds from source on version bump):
 
-A Home Assistant OS addon (addon) that bundles [securo-finance/securo](https://github.com/securo-finance/securo) as an all-in-one container: PostgreSQL, Redis, FastAPI backend, React frontend, Celery worker+beat, and an optional MCP server. It is NOT a standalone app — it runs inside HA OS using `bashio` and `s6-overlay`.
+| Addon | Type | Upstream | Key Stack |
+|-------|------|----------|-----------|
+| `securo/` | Production | securo-finance/securo | Python/FastAPI, React, PostgreSQL 16, Redis, Celery, Alpine |
+| `securo-test/` | Test | securo-finance/securo | Same as securo, ports 81/8766 |
+| `omniroute/` | Production | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Nginx, Debian |
+| `omniroute-test/` | Test | diegosouzapw/OmniRoute | Same as omniroute, port 20129 |
+| `vert/` | Production | VERT-sh/VERT | SvelteKit/Bun, Rust (vertd), Nginx, FFmpeg, Debian |
+| `vert-test/` | Test | VERT-sh/VERT | Same as vert, port 3001 |
 
-This repository contains two addons:
-- **Securo** (production)
-- **Securo Test** (testing/experiments)
+Users add `https://github.com/yianniscy84/hassio-addons` once → all four appear in HAOS.
 
-Users add `https://github.com/yianniscy84/haos-securo` once in HAOS → both addons appear.
-
-## Build & Run
+## Build & Run (Local Smoke Test)
 
 ```bash
-# Local build — run from the securo/ addon directory
+# Securo (from securo/ dir)
 cd securo
 docker build -t securo-addon .
-
-# Quick smoke test
 docker run -d --name securo-test -p 8080:80 -p 8765:8765 -v securo-data:/data securo-addon
-# Open http://localhost:8080
+# http://localhost:8080
+
+# OmniRoute (from omniroute/ dir)
+cd omniroute
+docker build -t omniroute-addon .
+docker run -d --name omniroute-test -p 80:80 -p 20128:20128 -v omniroute-data:/data omniroute-addon
+# http://localhost (ingress) or http://localhost:20128
+
+# VERT (from vert/ dir)
+cd vert
+docker build -t vert-addon .
+docker run -d --name vert-test -p 80:80 -p 3000:3000 -v vert-data:/data vert-addon
+# http://localhost (ingress) or http://localhost:3000
 ```
 
-Both production and test addons build from source locally via HAOS. No CI or pre-built images required.
-
-**Important**: The Dockerfile lives at `securo/Dockerfile` and the build context is the `securo/` directory. All COPY paths are relative to `securo/` — do NOT prefix with `securo/` inside the Dockerfile.
+**Dockerfile context is the addon directory** — COPY paths are relative to that dir (no `securo/` or `omniroute/` prefix).
 
 ## Repo Structure
 
 ```
-haos_securo/                       # Single addon repository
+hassio-addons/
 ├── README.md
-├── repository.yaml                # HAOS discovers all addons from this
-├── securo/                        # Production addon
+├── repository.yaml          # HAOS discovers addons from this
+├── AGENTS.md
+├── securo/                  # Production: slug=securo, ports 8080/8765
 │   ├── Dockerfile
-│   ├── run.sh
-│   ├── config.yaml                # slug: securo, ports: 8080, 8765
+│   ├── run.sh               # #!/usr/bin/with-contenv bashio
+│   ├── config.yaml
 │   ├── nginx.conf
-│   ├── backend/
-│   ├── frontend/
+│   ├── backend/             # Python: pyproject.toml, uv.lock, alembic
+│   ├── frontend/            # React: package.json, vite
 │   ├── translations/
 │   ├── CHANGELOG.md
-│   ├── DOCS.md
-│   ├── icon.png, logo.png
-│   ├── bashio_stub.sh
-│   └── with-contenv
-└── securo-test/                   # Test addon
-    ├── Dockerfile
-    ├── run.sh
-    ├── config.yaml                # slug: securo-test, ports: 81, 8766
-    ├── nginx.conf
-    ├── backend/
-    ├── frontend/
-    ├── translations/
-    ├── CHANGELOG.md
-    ├── DOCS.md
-    ├── icon.png, logo.png
-    ├── bashio_stub.sh
-    └── with-contenv
+│   └── bashio_stub.sh, with-contenv
+├── securo-test/             # Test: slug=securo-test, ports 81/8766
+├── omniroute/               # Production: slug=omniroute, port 20128
+│   ├── Dockerfile           # FROM diegosouzapw/omniroute:latest
+│   ├── run.sh               # #!/usr/bin/with-contenv bashio
+│   ├── config.yaml
+│   ├── nginx.conf
+│   ├── bashio_stub.sh, with-contenv
+│   ├── CHANGELOG.md
+│   └── updater.json
+└── omniroute-test/          # Test: slug=omniroute-test, port 20129
 ```
 
-## Key Quirks
+## Key Quirks — Securo (Python/Alpine)
 
-- **No `requirements.txt`**. Backend deps use `uv export --frozen --no-emit-project` then `pip install`. If you need to debug deps, the lockfile is `securo/backend/uv.lock`.
-- **Alpine runtime = musl**. Python packages must have musllinux wheels. `onnxruntime` (from `fastembed`) is the known blocker — has no musl wheel.
-- **`run.sh` uses `bashio`** (HA's bash library). All `bashio::config` calls read from `/data/options.json`. Don't replace with plain env reads.
-- **Entry point**: `uvicorn app.main:app` (FastAPI). App module is at `securo/backend/app/main.py`.
-- **Celery**: `celery -A app.worker worker/beat`. Worker and beat run as background processes, not s6 services.
-- **AI agents / MCP (opt-in)**: `agents_enabled` in addon options maps to `AGENTS_ENABLED`. When true, `run.sh` starts `uvicorn mcp_server.main:app` on port 8765 and the backend mounts `/api/agents`. JWT secret is persisted at `/data/mcp_jwt_secret` if not set. Do not add `fastembed` on Alpine (no musl `onnxruntime` wheel); default embedding provider is `ollama`.
-- **Database**: PostgreSQL 16, data persisted to `/data/postgres`. Migrations via `alembic upgrade head` on startup. Requires `pgcrypto` (provided by the `postgresql16-contrib` package) and `pgvector` (built from source in the Dockerfile runtime stage) to complete migrations.
-- **Redis**: Used for Celery broker + cache. No persistence (`appendonly no --save ""`).
-- **Ingress**: Addon appears in HA sidebar. Ingress port is 80, entry path is `/`. MCP clients must use mapped port 80 `/mcp` or port 8765, not ingress.
-- **Port 8080**: Exposed for non-ingress access (direct HTTP), including `/mcp` when agents are enabled.
-- **Port 8765**: Built-in MCP JSON-RPC (JWT required) when agents are enabled.
+- **No `requirements.txt`** — deps via `uv export --frozen --no-emit-project` → `pip install`. Lockfile: `securo/backend/uv.lock`.
+- **Alpine = musl** — Python packages need musllinux wheels. `onnxruntime` (from `fastembed`) has **no musl wheel** — blocker.
+- **`run.sh` uses `bashio`** — reads `/data/options.json`. Don't replace with plain env reads.
+- **Entrypoint**: `uvicorn app.main:app` (FastAPI at `securo/backend/app/main.py`).
+- **Celery**: `celery -A app.worker worker/beat` — background processes, not s6 services.
+- **AI agents (opt-in)**: `agents_enabled` → `AGENTS_ENABLED`. Starts MCP on 8765. JWT secret at `/data/mcp_jwt_secret`. Default embedding: `ollama`.
+- **Database**: PostgreSQL 16 at `/data/postgres`. Migrations: `alembic upgrade head` on startup. Needs `pgcrypto` (postgresql16-contrib) and `pgvector` (built from source in Dockerfile).
+- **Redis**: Celery broker + cache. No persistence (`appendonly no --save ""`).
+- **Ingress**: Port 80, entry `/`. MCP clients use mapped port 80 `/mcp` or 8765, not ingress.
+
+## Key Quirks — OmniRoute (Node.js/Debian)
+
+- **Upstream image base**: `diegosouzapw/omniroute:latest` — no source build.
+- **Runtime deps installed in Dockerfile**: `redis-server`, `nginx`, `curl`, `tzdata`, `python3`.
+- **`run.sh` starts**: Redis → Nginx (port 80) → OmniRoute (`node dev/run-standalone.mjs` on 20128).
+- **Secrets persisted** at `/data/jwt_secret`, `/data/api_key_secret` (generated on first run).
+- **Default password**: `omniroute` if `initial_password` not set.
+- **Env vars exported** in `run.sh` — `JWT_SECRET`, `API_KEY_SECRET`, `REDIS_URL`, etc.
+- **No PostgreSQL/Celery** — simpler stack.
+
+## Key Quirks � VERT (SvelteKit/Rust/Debian)
+
+- **Build from source** � Bun builds the SvelteKit static site; Rust builds the `vertd` daemon. Build args (`PUB_*`) are baked into the static JS at build time.
+- **Runtime base**: `debian:bookworm-slim` � avoids Alpine/musl issues with the Rust binary and FFmpeg.
+- **`PUB_DISABLE_ALL_EXTERNAL_REQUESTS=true`** � privacy-first default for self-hosted usage.
+- **`PUB_DISABLE_FAILURE_BLOCKS=true`** � required because HA ingress doesn't guarantee HTTPS (needed for video hash calculation).
+- **vertd runs in-process** � background process started by `run.sh`, not a separate addon. Listens on port 24153 internally.
+- **vertd is optional** � `vertd_enabled` config option. When disabled, video conversion is unavailable but images/audio/documents still work via WebAssembly.
+- **`run.sh` uses `bashio`** � reads `/data/options.json`. Don't replace with plain env reads.
+- **nginx serves static files** on both port 80 (ingress) and port 3000 (direct access). WASM files need correct MIME type.
+- **No Redis/PostgreSQL** � simplest runtime stack among the addons.
+- **Architecture**: amd64 and aarch64 only (Bun and Rust builder stages).
 
 ## Adding Dependencies
 
-Backend: edit `securo/backend/pyproject.toml`, run `uv lock` to update `uv.lock`, commit both.
-Frontend: edit `securo/frontend/package.json`, run `npm install` in that directory, commit `package-lock.json`.
+| Addon | Backend | Frontend |
+|-------|---------|----------|
+| Securo | Edit `securo/backend/pyproject.toml` → `uv lock` → commit both | Edit `securo/frontend/package.json` → `npm install` → commit `package-lock.json` |
+| OmniRoute | N/A (upstream image) | N/A (upstream image) |
 
-## Releasing
+## Releasing (All Addons)
 
-1. Bump `version` in `securo/config.yaml`
-2. **Update `securo/CHANGELOG.md`** with a new section for the version
+1. Bump `version` in `<addon>/config.yaml`
+2. **Update `<addon>/CHANGELOG.md`** with `## X.Y.Z` section
 3. Commit + push
 4. HAOS detects version change → rebuilds from source automatically
 
-**IMPORTANT — ALWAYS update `securo/CHANGELOG.md` when bumping the version.** Add a new `## X.Y.Z` section describing what changed. If you bump the version without updating the changelog, the release is incomplete.
+**ALWAYS update CHANGELOG.md when bumping version.** Incomplete without it.
 
 ## Troubleshooting
 
-- Build fails with `hash mismatch` in pip install → lockfile is stale, regenerate `uv.lock`
-- Build fails with `onnxruntime` → musl issue. Either switch runtime to Debian (`python:3.12-slim`) or remove `fastembed` from pyproject.toml
-- Container starts but backend errors → check `DATABASE_URL` format: `postgresql+asyncpg://postgres:<password>@localhost:5432/securo`
-- `bashio` not found in logs → entry script shebang must be `#!/usr/bin/with-contenv bashio`
-- Migration fails with `pgvector is not installed` or `pgcrypto is not available` → ensure `postgresql16-contrib` is installed and `pgvector` compiled successfully in the Dockerfile.
-- Startup fails with Pydantic validation error (`ValidationError`) for boolean variables like `debug` → check if `/data/options.json` is missing or empty inside the container. `run.sh` will auto-generate a default one on startup if it is not present.
+| Issue | Cause | Fix |
+|-------|-------|-----|
+| `hash mismatch` in pip install | Stale `uv.lock` | Regenerate: `cd securo/backend && uv lock` |
+| `onnxruntime` build fail | No musl wheel | Switch to Debian base or remove `fastembed` |
+| Backend errors on start | Wrong `DATABASE_URL` | Format: `postgresql+asyncpg://postgres:<pw>@localhost:5432/securo` |
+| `bashio` not found | Shebang wrong | Must be `#!/usr/bin/with-contenv bashio` |
+| Migration fails: pgvector/pgcrypto | Missing in Dockerfile | Ensure `postgresql16-contrib` + pgvector compile |
+| Pydantic ValidationError (bool) | Missing `/data/options.json` | `run.sh` auto-generates default; check volume mount |
+| OmniRoute: Redis/Nginx fail | Port conflict or permission | Check `run.sh` order: Redis → Nginx → App |
+
+## Updater
+
+Each addon has `updater.json` with `upstream_version` and `last_update` for README badges. Update manually or via script when upstream releases.
