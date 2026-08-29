@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.5
+
+- Fix sidebar icon: use `mdi:api` instead of invalid `mdi:route`
+
 ## 0.3.3
 
 - Install nginx, curl, tzdata in Dockerfile
