@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.4
+
+- Fix Dockerfile: remove stale Rust build stage, use pre-built vertd
+
 ## 0.1.3
 
 - Speed up build: use pre-built vertd binary instead of compiling from source

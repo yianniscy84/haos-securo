@@ -2,7 +2,7 @@ name: "VERT Test"
 description: >-
   Open-source file converter (TEST). Converts images, audio, documents via
   WebAssembly and video via the vertd daemon. This is a pre-release/test version
-version: "0.1.3"
+version: "0.1.4"
 slug: "vert-test"
 init: false
 arch:
