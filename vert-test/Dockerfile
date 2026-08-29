@@ -54,7 +54,7 @@ RUN cargo build --release
 # ============================================================================
 FROM debian:bookworm-slim
 
-ARG BUILD_VERSION=0.1.2
+ARG BUILD_VERSION=0.1.3
 ARG BUILD_ARCH=amd64
 
 LABEL \
@@ -89,7 +89,7 @@ RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 COPY --from=frontend /app/build /usr/share/nginx/html
 
 # Copy vertd binary from the build stage
-COPY --from=vertd-builder /build/vertd-src/target/release/vertd /usr/local/bin/vertd
+COPY --from=vertd-downloader /usr/local/bin/vertd /usr/local/bin/vertd
 RUN chmod +x /usr/local/bin/vertd
 
 # Persistent data directory

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Speed up build: use pre-built vertd binary instead of compiling from source
+
 ## 0.1.2
 
 - Fix double period in addon description
