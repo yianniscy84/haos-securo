@@ -3,7 +3,7 @@ description: >-
   Free AI gateway (TEST). One endpoint, 350+ providers, 1200+ models.
   This is a pre-release/test version.
   Configure providers, API keys, and routing through the dashboard after install
-version: "0.3.5"
+version: "0.3.6"
 slug: "omniroute-test"
 init: false
 arch:
@@ -21,9 +21,6 @@ map:
   - type: share
     read_only: false
 apparmor: true
-ingress: true
-ingress_port: 80
-ingress_entry: /
 panel_icon: mdi:api
 panel_title: "OmniRoute Test"
 backup: hot

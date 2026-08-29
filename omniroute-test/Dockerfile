@@ -12,7 +12,6 @@ USER root
 RUN apt-get update && apt-get install -y --no-install-recommends \
     bash \
     redis-server \
-    nginx \
     curl \
     python3 \
     tzdata \
@@ -25,7 +24,7 @@ RUN sed -i 's/\r//' /usr/local/lib/bashio_stub.sh /usr/local/lib/with-contenv-st
     && cp /usr/local/lib/with-contenv-stub /usr/bin/with-contenv \
     && chmod +x /usr/bin/with-contenv
 
-ARG BUILD_VERSION=0.3.4
+ARG BUILD_VERSION=0.3.6
 ARG BUILD_ARCH=amd64
 
 LABEL \
@@ -34,12 +33,11 @@ LABEL \
     io.hass.arch="${BUILD_ARCH}"
 
 # Copy addon config files
-COPY nginx.conf /etc/nginx/nginx.conf
 COPY run.sh /run.sh
 RUN sed -i 's/\r//' /run.sh && chmod a+x /run.sh
 
 # Persistent data directory — owned by node so OmniRoute can write
-RUN mkdir -p /data /var/log/nginx /run/nginx \
+RUN mkdir -p /data \
     && chown -R node:node /data \
     && echo '{}' > /data/options.json
 
