@@ -7,7 +7,7 @@ This repository contains **four Home Assistant OS addons** (no CI, no pre-built 
 | `securo/` | Production | securo-finance/securo | Python/FastAPI, React, PostgreSQL 16, Redis, Celery, Alpine |
 | `securo-test/` | Test | securo-finance/securo | Same as securo, ports 81/8766 |
 | `omniroute/` | Production | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Nginx, Debian |
-| `omniroute-test/` | Test | diegosouzapw/OmniRoute | Same as omniroute, port 20129 |
+| `omniroute-test/` | Test | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Debian. No nginx, no ingress — direct access on port 20129 |
 
 Users add `https://github.com/yianniscy84/hassio-addons` once → all four appear in HAOS.
 
@@ -56,7 +56,7 @@ hassio-addons/
 │   ├── bashio_stub.sh, with-contenv
 │   ├── CHANGELOG.md
 │   └── updater.json
-└── omniroute-test/          # Test: slug=omniroute-test, port 20129
+└── omniroute-test/          # Test: slug=omniroute-test, port 20129 (no nginx, no ingress)
 ```
 
 ## Key Quirks — Securo (Python/Alpine)
@@ -75,7 +75,7 @@ hassio-addons/
 
 - **Upstream image base**: `diegosouzapw/omniroute:latest` — no source build.
 - **Runtime deps installed in Dockerfile**: `redis-server`, `nginx`, `curl`, `tzdata`, `python3`.
-- **`run.sh` starts**: Redis → Nginx (port 80) → OmniRoute (`node dev/run-standalone.mjs` on 20128).
+- **`run.sh` starts**: Redis → Nginx (port 80) → OmniRoute (`node dev/run-standalone.mjs` on 20128). (Production only — test addon skips nginx.)
 - **Secrets persisted** at `/data/jwt_secret`, `/data/api_key_secret` (generated on first run).
 - **Default password**: `omniroute` if `initial_password` not set.
 - **Env vars exported** in `run.sh` — `JWT_SECRET`, `API_KEY_SECRET`, `REDIS_URL`, etc.
@@ -107,7 +107,7 @@ hassio-addons/
 | `bashio` not found | Shebang wrong | Must be `#!/usr/bin/with-contenv bashio` |
 | Migration fails: pgvector/pgcrypto | Missing in Dockerfile | Ensure `postgresql16-contrib` + pgvector compile |
 | Pydantic ValidationError (bool) | Missing `/data/options.json` | `run.sh` auto-generates default; check volume mount |
-| OmniRoute: Redis/Nginx fail | Port conflict or permission | Check `run.sh` order: Redis → Nginx → App |
+| OmniRoute: Redis/Nginx fail | Port conflict or permission | Check `run.sh` order: Redis → Nginx → App (production only — test has no nginx) |
 
 ## Updater
 
