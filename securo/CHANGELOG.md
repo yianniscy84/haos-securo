@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.29.2
+
+- Add `Cache-Control: no-cache, no-store, must-revalidate` to `index.html` in Nginx to prevent browsers from caching stale bundle script hashes across updates
+
 ## 0.29.1
 
 - Fix blank screen on OAuth callbacks and nested routes (`/oauth/callback`, `/auth/oidc/callback`, `/accounts/:id`) by mapping nested `/static/` asset requests in Nginx
