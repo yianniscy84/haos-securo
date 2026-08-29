@@ -2,7 +2,7 @@ name: "VERT"
 description: >-
   Open-source file converter. Converts images, audio, documents via WebAssembly
   and video via the vertd daemon. 250+ formats, fully local, no file size limits
-version: "0.1.4"
+version: "0.1.5"
 slug: "vert"
 init: false
 arch:

@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.5
+
+- Fix nginx: run in foreground so container stays alive for ingress
+
 ## 0.1.4
 
 - Fix Dockerfile: remove stale Rust build stage, use pre-built vertd
