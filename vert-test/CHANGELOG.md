@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.6
+
+- Fix WASM MIME type: use types block instead of add_header
+
 ## 0.1.5
 
 - Fix nginx: run in foreground so container stays alive for ingress

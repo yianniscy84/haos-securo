@@ -59,7 +59,7 @@ RUN if [ "$TARGETARCH" = "amd64" ]; then \
 # ============================================================================
 FROM debian:bookworm-slim
 
-ARG BUILD_VERSION=0.1.5
+ARG BUILD_VERSION=0.1.6
 ARG BUILD_ARCH=amd64
 
 LABEL \
