@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.29.1
+
+- Fix blank screen on OAuth callbacks and nested routes (`/oauth/callback`, `/auth/oidc/callback`, `/accounts/:id`) by mapping nested `/static/` asset requests in Nginx
+
 ## 0.29.0
 
 - Sync with upstream securo v0.14.5
