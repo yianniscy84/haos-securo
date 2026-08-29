@@ -1,114 +1,103 @@
-# AGENTS.md
+# Home Assistant OS Addons (`hassio-addons`)
 
-This repository contains **four Home Assistant OS addons** (no CI, no pre-built images — HAOS builds from source on version bump):
+Multi-addon repository providing Home Assistant OS (HAOS) add-ons. HAOS builds add-ons directly from source upon version bumps detected in `config.yaml`.
 
-| Addon | Type | Upstream | Key Stack |
-|-------|------|----------|-----------|
-| `securo/` | Production | securo-finance/securo | Python/FastAPI, React, PostgreSQL 16, Redis, Celery, Alpine |
-| `securo-test/` | Test | securo-finance/securo | Same as securo, ports 81/8766 |
-| `omniroute/` | Production | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Nginx, Debian |
-| `omniroute-test/` | Test | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Debian. No nginx, no ingress — direct access on port 20129 |
+Repository URL: `https://github.com/yianniscy84/hassio-addons`
 
-Users add `https://github.com/yianniscy84/hassio-addons` once → all four appear in HAOS.
+---
 
-## Build & Run (Local Smoke Test)
+## Add-on Catalog
+
+| Addon Directory | Type | Slug | Upstream Project | Web / Ingress | MCP Port | Direct Port | Base Stack |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| [`securo/`](securo/) | Production | `securo` | `securo-finance/securo` | Port 80 / Ingress | 8765 | 8080 | Python 3.12 (FastAPI), React, PG 16, Redis, Celery, Alpine |
+| [`securo-test/`](securo-test/) | Test | `securo-test` | `securo-finance/securo` | Port 81 / Ingress | 8766 | 8081 | Same as securo |
+| [`omniroute/`](omniroute/) | Production | `omniroute` | `diegosouzapw/OmniRoute` | Port 80 / Ingress | — | 20128 | Node.js (upstream image), Redis, Nginx, Debian |
+| [`omniroute-test/`](omniroute-test/) | Test | `omniroute-test` | `diegosouzapw/OmniRoute` | No Ingress | — | 20129 | Node.js (upstream image), Redis, Debian (direct access) |
+
+---
+
+## Essential Commands
+
+> **Important:** Run Docker commands from within the specific target add-on directory. Dockerfile build context is the add-on folder (e.g. `cd securo && docker build ...`).
+
+### Local Smoke Tests
 
 ```bash
-# Securo (from securo/ dir)
+# Securo (from securo/ or securo-test/)
 cd securo
 docker build -t securo-addon .
 docker run -d --name securo-test -p 8080:80 -p 8765:8765 -v securo-data:/data securo-addon
-# http://localhost:8080
+# Access UI: http://localhost:8080 | MCP: http://localhost:8765/mcp
 
-# OmniRoute (from omniroute/ dir)
+# OmniRoute (from omniroute/ or omniroute-test/)
 cd omniroute
 docker build -t omniroute-addon .
 docker run -d --name omniroute-test -p 80:80 -p 20128:20128 -v omniroute-data:/data omniroute-addon
-# http://localhost (ingress) or http://localhost:20128
-
+# Access UI: http://localhost (ingress) or http://localhost:20128
 ```
 
-**Dockerfile context is the addon directory** — COPY paths are relative to that dir (no `securo/` or `omniroute/` prefix).
+---
 
-## Repo Structure
+## Architecture & Add-on Quirks
 
-```
-hassio-addons/
-├── README.md
-├── repository.yaml          # HAOS discovers addons from this
-├── AGENTS.md
-├── securo/                  # Production: slug=securo, ports 8080/8765
-│   ├── Dockerfile
-│   ├── run.sh               # #!/usr/bin/with-contenv bashio
-│   ├── config.yaml
-│   ├── nginx.conf
-│   ├── backend/             # Python: pyproject.toml, uv.lock, alembic
-│   ├── frontend/            # React: package.json, vite
-│   ├── translations/
-│   ├── CHANGELOG.md
-│   └── bashio_stub.sh, with-contenv
-├── securo-test/             # Test: slug=securo-test, ports 81/8766
-├── omniroute/               # Production: slug=omniroute, port 20128
-│   ├── Dockerfile           # FROM diegosouzapw/omniroute:latest
-│   ├── run.sh               # #!/usr/bin/with-contenv bashio
-│   ├── config.yaml
-│   ├── nginx.conf
-│   ├── bashio_stub.sh, with-contenv
-│   ├── CHANGELOG.md
-│   └── updater.json
-└── omniroute-test/          # Test: slug=omniroute-test, port 20129 (no nginx, no ingress)
-```
+### Securo (Python 3.12 / Alpine)
+- **Dependency Management:** No `requirements.txt`. Lockfile is `backend/uv.lock` generated via `uv export --frozen --no-emit-project`.
+- **Alpine / Musl Constraints:** Packages require musllinux wheels. `onnxruntime` (`fastembed`) lacks musl wheels and is excluded from `backend/pyproject.toml`. Default embeddings use `ollama` or OpenAI compatibility.
+- **Nginx Static Asset Routing:** `nginx.conf` maps `^/(?:.+/)?static/(.+)$` to `/var/www/securo/static/$1` so nested routes (e.g., `/oauth/callback`, `/auth/oidc/callback`, `/accounts/:id`) resolve Vite's relative asset paths properly under direct domains and HA Ingress.
+- **Database & Extensions:** PostgreSQL 16 at `/data/postgres`. Requires `postgresql16-contrib` (`pgcrypto`) and compiled `pgvector`. Migrations run via `alembic upgrade head` on startup in `run.sh`.
+- **Background Tasks:** Redis is ephemeral cache/broker. Celery runs as background worker/beat inside the container.
+- **Configuration & Bashio:** Options are parsed from `/data/options.json` via `bashio`. Shebang must remain `#!/usr/bin/with-contenv bashio`.
 
-## Key Quirks — Securo (Python/Alpine)
+### OmniRoute (Node.js / Debian)
+- **Upstream Base Image:** Extends `diegosouzapw/omniroute:latest`. No source build.
+- **Runtime Stack:** Adds `redis-server`, `nginx`, `curl`, `tzdata`, `python3`.
+- **Entrypoint (`run.sh`):** Boots Redis → Nginx (port 80, production only) → OmniRoute (`node dev/run-standalone.mjs`). `omniroute-test` runs standalone on port 20129 without Nginx/ingress.
+- **Persistent Secrets:** Stored at `/data/jwt_secret` and `/data/api_key_secret`.
 
-- **No `requirements.txt`** — deps via `uv export --frozen --no-emit-project` → `pip install`. Lockfile: `securo/backend/uv.lock`.
-- **Alpine = musl** — Python packages need musllinux wheels. `onnxruntime` (from `fastembed`) has **no musl wheel** — blocker.
-- **`run.sh` uses `bashio`** — reads `/data/options.json`. Don't replace with plain env reads.
-- **Entrypoint**: `uvicorn app.main:app` (FastAPI at `securo/backend/app/main.py`).
-- **Celery**: `celery -A app.worker worker/beat` — background processes, not s6 services.
-- **AI agents (opt-in)**: `agents_enabled` → `AGENTS_ENABLED`. Starts MCP on 8765. JWT secret at `/data/mcp_jwt_secret`. Default embedding: `ollama`.
-- **Database**: PostgreSQL 16 at `/data/postgres`. Migrations: `alembic upgrade head` on startup. Needs `pgcrypto` (postgresql16-contrib) and `pgvector` (built from source in Dockerfile).
-- **Redis**: Celery broker + cache. No persistence (`appendonly no --save ""`).
-- **Ingress**: Port 80, entry `/`. MCP clients use mapped port 80 `/mcp` or 8765, not ingress.
+---
 
-## Key Quirks — OmniRoute (Node.js/Debian)
+## Upstream Synchronization
 
-- **Upstream image base**: `diegosouzapw/omniroute:latest` — no source build.
-- **Runtime deps installed in Dockerfile**: `redis-server`, `nginx`, `curl`, `tzdata`, `python3`.
-- **`run.sh` starts**: Redis → Nginx (port 80) → OmniRoute (`node dev/run-standalone.mjs` on 20128). (Production only — test addon skips nginx.)
-- **Secrets persisted** at `/data/jwt_secret`, `/data/api_key_secret` (generated on first run).
-- **Default password**: `omniroute` if `initial_password` not set.
-- **Env vars exported** in `run.sh` — `JWT_SECRET`, `API_KEY_SECRET`, `REDIS_URL`, etc.
-- **No PostgreSQL/Celery** — simpler stack.
+See [`UPSTREAM.md`](UPSTREAM.md) for version matrix and sync tracking.
 
-## Adding Dependencies
+### Securo Sync Checklist
+1. Copy updated `backend/` and `frontend/` from upstream repository.
+2. **Preserve HAOS-specific files:**
+   - `backend/pyproject.toml` (fastembed exclusion & pinned dependencies)
+   - `frontend/src/lib/basename.ts` (dynamic ingress base path detection)
+   - `frontend/src/App.tsx` (`<BrowserRouter basename={basename}>`)
+   - `frontend/src/lib/api.ts` (`basename` in `baseURL` + login redirect)
+   - `frontend/vite.config.ts` (`base: './'`)
+3. Regenerate lockfile if backend dependencies changed: `cd backend && uv lock`.
+4. Update `UPSTREAM.md` with new upstream version and sync timestamp.
 
-| Addon | Backend | Frontend |
-|-------|---------|----------|
-| Securo | Edit `securo/backend/pyproject.toml` → `uv lock` → commit both | Edit `securo/frontend/package.json` → `npm install` → commit `package-lock.json` |
-| OmniRoute | N/A (upstream image) | N/A (upstream image) |
+---
 
-## Releasing (All Addons)
+## Release Procedure (All Add-ons)
 
-1. Bump `version` in `<addon>/config.yaml`
-2. **Update `<addon>/CHANGELOG.md`** with `## X.Y.Z` section
-3. Commit + push
-4. HAOS detects version change → rebuilds from source automatically
+1. Bump `version` in `<addon>/config.yaml` (e.g., `version: "0.29.1"`).
+2. **Add release notes in `<addon>/CHANGELOG.md`** under `## X.Y.Z`.
+3. Update version in `UPSTREAM.md` and `<addon>/updater.json` if applicable.
+4. Commit and push to `origin/main`. HAOS automatically detects the version bump and prompts users to update.
 
-**ALWAYS update CHANGELOG.md when bumping version.** Incomplete without it.
+---
 
-## Troubleshooting
+## Troubleshooting Guide
 
 | Issue | Cause | Fix |
-|-------|-------|-----|
-| `hash mismatch` in pip install | Stale `uv.lock` | Regenerate: `cd securo/backend && uv lock` |
-| `onnxruntime` build fail | No musl wheel | Switch to Debian base or remove `fastembed` |
-| Backend errors on start | Wrong `DATABASE_URL` | Format: `postgresql+asyncpg://postgres:<pw>@localhost:5432/securo` |
-| `bashio` not found | Shebang wrong | Must be `#!/usr/bin/with-contenv bashio` |
-| Migration fails: pgvector/pgcrypto | Missing in Dockerfile | Ensure `postgresql16-contrib` + pgvector compile |
-| Pydantic ValidationError (bool) | Missing `/data/options.json` | `run.sh` auto-generates default; check volume mount |
-| OmniRoute: Redis/Nginx fail | Port conflict or permission | Check `run.sh` order: Redis → Nginx → App (production only — test has no nginx) |
+| :--- | :--- | :--- |
+| `hash mismatch` during `pip install` | Outdated `uv.lock` | Run `cd <addon>/backend && uv lock` and commit both files. |
+| Blank screen on deep links / OAuth callback | Nested relative asset resolution | Ensure `nginx.conf` contains the static alias route `location ~* ^/(?:.+/)?static/(.+)$`. |
+| Cloudflare Error 524 on OAuth callback | Reverse proxy routing to wrong host port | Direct domains must route to Securo's host port (`8080`), not HA port `8123`. |
+| `onnxruntime` build failure | No musl wheel on Alpine | Keep `fastembed` excluded from `pyproject.toml`. |
+| `bashio` not found | Broken shebang or missing stub | Ensure shebang is `#!/usr/bin/with-contenv bashio`. |
+| PostgreSQL migration error (vector/crypto) | Missing extension libraries | Verify `postgresql16-contrib` and `pgvector` compile in `Dockerfile`. |
 
-## Updater
+---
 
-Each addon has `updater.json` with `upstream_version` and `last_update` for README badges. Update manually or via script when upstream releases.
+## Response Style & Efficiency
+- Direct answers first. Technical reasoning follows when necessary.
+- No conversational preamble, hollow closings, or restating the prompt.
+- Structured output (code, tables, diffs).
+- Clickable file links for all references.
