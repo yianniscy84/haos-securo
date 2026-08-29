@@ -1,7 +1,0 @@
-configuration:
-  vertd_enabled:
-    name: "vertd enabled"
-    description: "Start the vertd video conversion daemon (FFmpeg wrapper) for server-side video processing."
-  vertd_port:
-    name: "vertd port"
-    description: "Internal port for the vertd daemon. Not exposed to the host network."

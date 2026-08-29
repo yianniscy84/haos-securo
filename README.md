@@ -155,39 +155,6 @@ OmniRoute is an open-source AI gateway that routes LLM requests through one Open
 
 ---
 
-## [VERT](vert/)
-
-<p align="center">
-  <img src="vert/logo.png" alt="VERT" width="100">
-</p>
-
-**Open-source file converter: 250+ formats, fully local, no file size limits for Home Assistant.**
-
-VERT is a file conversion utility that uses WebAssembly to convert files directly on your device — no cloud required. For video conversion, it includes the **vertd** daemon (FFmpeg wrapper) for server-side processing.
-
-- 250+ file formats — images, audio, documents, and video
-- Client-side conversion via WebAssembly (images, audio, documents)
-- Server-side video conversion via bundled vertd daemon
-- No file or file size limits
-- Privacy-first — no external requests, no analytics
-- Conversion settings for fine-tuning output
-
-**Upstream project:** [VERT-sh/VERT](https://github.com/VERT-sh/VERT)
-
-🧪 **Test version:** [VERT Test](vert-test/)
-
-### Add-on information
-
-| Property | Value |
-|----------|--------|
-| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fvert%2Fconfig.yaml&color=brightgreen) |
-| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fvert%2Fupdater.json&color=blue) |
-| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fvert%2Fupdater.json&color=grey) |
-| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) |
-| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
-
----
-
 ## Support
 
 Need help or found a problem?

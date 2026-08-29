@@ -1,6 +1,6 @@
 # AGENTS.md
 
-This repository contains **six Home Assistant OS addons** (no CI, no pre-built images â€” HAOS builds from source on version bump):
+This repository contains **four Home Assistant OS addons** (no CI, no pre-built images â€” HAOS builds from source on version bump):
 
 | Addon | Type | Upstream | Key Stack |
 |-------|------|----------|-----------|
@@ -8,8 +8,6 @@ This repository contains **six Home Assistant OS addons** (no CI, no pre-built i
 | `securo-test/` | Test | securo-finance/securo | Same as securo, ports 81/8766 |
 | `omniroute/` | Production | diegosouzapw/OmniRoute | Node.js (upstream image), Redis, Nginx, Debian |
 | `omniroute-test/` | Test | diegosouzapw/OmniRoute | Same as omniroute, port 20129 |
-| `vert/` | Production | VERT-sh/VERT | SvelteKit/Bun, Rust (vertd), Nginx, FFmpeg, Debian |
-| `vert-test/` | Test | VERT-sh/VERT | Same as vert, port 3001 |
 
 Users add `https://github.com/yianniscy84/hassio-addons` once â†’ all four appear in HAOS.
 
@@ -28,11 +26,6 @@ docker build -t omniroute-addon .
 docker run -d --name omniroute-test -p 80:80 -p 20128:20128 -v omniroute-data:/data omniroute-addon
 # http://localhost (ingress) or http://localhost:20128
 
-# VERT (from vert/ dir)
-cd vert
-docker build -t vert-addon .
-docker run -d --name vert-test -p 80:80 -p 3000:3000 -v vert-data:/data vert-addon
-# http://localhost (ingress) or http://localhost:3000
 ```
 
 **Dockerfile context is the addon directory** â€” COPY paths are relative to that dir (no `securo/` or `omniroute/` prefix).
@@ -87,19 +80,6 @@ hassio-addons/
 - **Default password**: `omniroute` if `initial_password` not set.
 - **Env vars exported** in `run.sh` â€” `JWT_SECRET`, `API_KEY_SECRET`, `REDIS_URL`, etc.
 - **No PostgreSQL/Celery** â€” simpler stack.
-
-## Key Quirks — VERT (SvelteKit/Rust/Debian)
-
-- **Build from source** — Bun builds the SvelteKit static site; Rust builds the `vertd` daemon. Build args (`PUB_*`) are baked into the static JS at build time.
-- **Runtime base**: `debian:bookworm-slim` — avoids Alpine/musl issues with the Rust binary and FFmpeg.
-- **`PUB_DISABLE_ALL_EXTERNAL_REQUESTS=true`** — privacy-first default for self-hosted usage.
-- **`PUB_DISABLE_FAILURE_BLOCKS=true`** — required because HA ingress doesn't guarantee HTTPS (needed for video hash calculation).
-- **vertd runs in-process** — background process started by `run.sh`, not a separate addon. Listens on port 24153 internally.
-- **vertd is optional** — `vertd_enabled` config option. When disabled, video conversion is unavailable but images/audio/documents still work via WebAssembly.
-- **`run.sh` uses `bashio`** — reads `/data/options.json`. Don't replace with plain env reads.
-- **nginx serves static files** on both port 80 (ingress) and port 3000 (direct access). WASM files need correct MIME type.
-- **No Redis/PostgreSQL** — simplest runtime stack among the addons.
-- **Architecture**: amd64 and aarch64 only (Bun and Rust builder stages).
 
 ## Adding Dependencies
 
