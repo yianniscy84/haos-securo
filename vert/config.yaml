@@ -1,8 +1,8 @@
 name: "VERT"
 description: >-
   Open-source file converter. Converts images, audio, documents via WebAssembly
-  and video via the vertd daemon. 250+ formats, fully local, no file size limits.
-version: "0.1.1"
+  and video via the vertd daemon. 250+ formats, fully local, no file size limits
+version: "0.1.2"
 slug: "vert"
 init: false
 arch:
@@ -22,6 +22,7 @@ apparmor: true
 ingress: true
 ingress_port: 80
 ingress_entry: /
+webui: "http://[HOST]:[PORT:3000]/"
 panel_icon: mdi:file-replace
 panel_title: "VERT"
 backup: hot
