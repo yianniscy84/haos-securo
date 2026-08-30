@@ -1,63 +1,78 @@
-# OmniRoute Test
+# Home Assistant Add-on: OmniRoute Test
 
 <p align="center">
-  <img src="icon.png" alt="OmniRoute Test" width="100">
+  <img src="icon.png" alt="OmniRoute Test Logo" width="120">
 </p>
 
-Experimental/test release of OmniRoute for Home Assistant.
+<p align="center">
+  <strong>Pre-release and experimental test build of OmniRoute for Home Assistant.</strong><br>
+  Test new routing engines, experimental upstream builds, and provider integrations on an isolated port.
+</p>
 
-## About
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute-test%2Fconfig.yaml&color=orange&style=flat-square" alt="Add-on Version">
+  <img src="https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute-test%2Fupdater.json&color=blue&style=flat-square" alt="Upstream Version">
+  <img src="https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute-test%2Fupdater.json&color=lightgrey&style=flat-square" alt="Last Update">
+  <img src="https://img.shields.io/badge/Ingress-No-grey.svg?style=flat-square" alt="Ingress Disabled">
+  <img src="https://img.shields.io/badge/Stage-Testing-orange.svg?style=flat-square" alt="Stage Testing">
+</p>
 
-This version is intended for testing newer or experimental changes before they are included in the stable OmniRoute add-on.
+<p align="center">
+  <img src="https://img.shields.io/badge/aarch64-green.svg?style=flat-square&logo=arm" alt="aarch64">
+  <img src="https://img.shields.io/badge/amd64-green.svg?style=flat-square&logo=amd" alt="amd64">
+  <img src="https://img.shields.io/badge/armv7-green.svg?style=flat-square&logo=arm" alt="armv7">
+</p>
 
-OmniRoute is a free, open-source AI gateway that routes LLM requests through one OpenAI-compatible endpoint. It supports:
+---
 
-- **350+ providers** — Claude, GPT, Gemini, DeepSeek, Kimi, and hundreds more
-- **1200+ models** — including free tiers
-- **Auto-fallback routing** — seamless failover across providers and models
-- **19 routing strategies** — priority, weighted, round-robin, cost-optimized, auto, and more
-- **Dashboard UI** — full management interface for providers, keys, and routing
-- **OpenAI-compatible API** — drop-in replacement for any tool that supports OpenAI
-- **MCP & A2A** — agent protocol support for AI tool chains
-- **Compression** — RTK + Caveman compression saves 15–95% tokens
+> [!WARNING]
+> **Pre-Release / Experimental Add-on**: This test build is designed for staging and experimenting with new upstream OmniRoute builds. For everyday home automation and production workflows, please install the stable [**OmniRoute**](../omniroute/) add-on.
 
-> **Warning:** This is a test version. It may contain experimental changes and should not be relied upon for critical data.
+---
 
-**Upstream project:** [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
+## 🧪 Side-by-Side Execution & Port Isolation
 
-## Add-on information
+OmniRoute Test runs on a dedicated port without Home Assistant Ingress to prevent conflicts with your production OmniRoute instance:
 
-| Property | Value |
-|----------|--------|
-| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fconfig.yaml&color=brightgreen) |
-| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fupdater.json&color=blue) |
-| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fomniroute-test%2Fupdater.json&color=grey) |
-| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) |
+| Parameter | OmniRoute (Production) | OmniRoute Test (This Add-on) |
+| :--- | :---: | :---: |
+| **Direct Host Port** | `20128` | `20129` |
+| **Ingress UI** | Enabled (Sidebar) | Disabled (Direct Port Only) |
+| **API Endpoint** | `http://<ha-host>:20128/v1` | `http://<ha-host>:20129/v1` |
+| **Data Directory** | `/data` (Isolated Volume) | `/data` (Isolated Volume) |
 
-## Installation
+---
 
-1. Open **Settings → Apps → App Store**.
-2. Select the **⋮** menu in the top-right corner.
-3. Select **Repositories**.
-4. Add the following repository:
+## 🌟 Key Features
 
-```text
-https://github.com/yianniscy84/hassio-addons
+- **Isolated AI Gateway**: Evaluate pre-release builds and new provider adapters without interrupting running LLM services.
+- **Universal Provider Support**: 350+ AI providers (Claude, OpenAI, Gemini, DeepSeek, Kimi, Ollama, etc.).
+- **19 Routing Strategies**: Priority failover, weighted distributions, and token optimization.
+- **Prompt Compression**: Built-in RTK and Caveman token compression saving up to 95% of prompt tokens.
+
+---
+
+## 🚀 Installation & Quickstart
+
+1. Add the repository to Home Assistant:
+   ```text
+   https://github.com/yianniscy84/hassio-addons
+   ```
+2. In the Add-on Store, find **OmniRoute Test** and click **Install**.
+3. Start the add-on and access the dashboard directly at `http://<your-ha-host>:20129`.
+4. Test API access with a direct request:
+
+```bash
+curl http://<your-ha-host>:20129/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -d '{"model":"auto","messages":[{"role":"user","content":"Testing OmniRoute Test!"}]}'
 ```
 
-5. Select **Add**.
-6. Find **OmniRoute Test** in the App Store and install it.
+---
 
-For more information, see the official [Home Assistant documentation](https://www.home-assistant.io/common-tasks/os/#installing-third-party-add-ons).
+## 🛠️ Support & Links
 
-## Support
-
-Need help or found a problem?
-
-- **Discord:** [OmniRoute Community](https://discord.gg/omniroute)
-- **GitHub:** [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
-- Found a bug or have a feature request? Please [open an issue](https://github.com/yianniscy84/hassio-addons/issues).
-
-## Disclaimer
-
-This app is provided as-is. Always keep appropriate backups of important data before installing or upgrading add-ons.
+- **Stable Version**: [OmniRoute Add-on](../omniroute/)
+- **Documentation**: [DOCS.md](DOCS.md)
+- **Issues & Feedback**: [GitHub Issues](https://github.com/yianniscy84/hassio-addons/issues)
+- **Upstream Project**: [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)

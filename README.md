@@ -1,57 +1,47 @@
-# Home Assistant Apps by yianniscy84
+# Home Assistant Add-ons by yianniscy84
 
 <p align="center">
-  <img src="https://camo.githubusercontent.com/3cfef02c675957130352d76646819bbada6eac32a573ca17e5d4c0edc56b0554/68747470733a2f2f7777772e6f70656e686f6d65666f756e646174696f6e2e6f72672f6261646765732f686f6d652d617373697374616e742e706e67" alt="Home Assistant" width="120">
+  <img src="https://raw.githubusercontent.com/home-assistant/brands/master/core_badges/dark/home-assistant.png" alt="Home Assistant" width="160">
 </p>
 
 <p align="center">
-  <strong>Additional Home Assistant apps for your smart home</strong><br>
-  Carefully packaged and maintained Home Assistant add-ons.
+  <strong>Curated, high-performance Home Assistant OS add-ons for your smart home.</strong><br>
+  Carefully packaged, independently maintained, and updated with upstream releases.
 </p>
 
 <p align="center">
   <a href="https://github.com/yianniscy84/hassio-addons">
-    <img src="https://img.shields.io/github/last-commit/yianniscy84/hassio-addons?label=Last%20update" alt="Last update">
+    <img src="https://img.shields.io/github/last-commit/yianniscy84/hassio-addons?label=Last%20Update&logo=github&style=flat-square" alt="Last update">
   </a>
   <a href="https://github.com/yianniscy84/hassio-addons/stargazers">
-    <img src="https://img.shields.io/github/stars/yianniscy84/hassio-addons?style=flat" alt="GitHub stars">
+    <img src="https://img.shields.io/github/stars/yianniscy84/hassio-addons?label=Stars&logo=github&style=flat-square" alt="GitHub stars">
   </a>
-  <a href="https://github.com/yianniscy84/hassio-addons/commits/main">
-    <img src="https://img.shields.io/github/commit-activity/y/yianniscy84/hassio-addons?label=Activity" alt="Commit activity">
+  <a href="https://github.com/yianniscy84/hassio-addons/issues">
+    <img src="https://img.shields.io/github/issues/yianniscy84/hassio-addons?label=Issues&logo=github&style=flat-square" alt="Open issues">
+  </a>
+  <a href="LICENSE.md">
+    <img src="https://img.shields.io/badge/License-MIT-green.svg?style=flat-square" alt="MIT License">
   </a>
 </p>
 
 ---
 
-## About
+## 📦 Add-on Catalog
 
-This repository provides additional **Home Assistant apps (add-ons)** that can be installed directly through Home Assistant.
+| Add-on | Status | Version | Ingress | Host Port(s) | Supported Architectures | Description |
+| :--- | :---: | :---: | :---: | :---: | :--- | :--- |
+| [**Securo**](securo/) | Stable | ![Securo Version](https://img.shields.io/badge/dynamic/yaml?label=&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fconfig.yaml&color=brightgreen&style=flat-square) | ✅ Yes | `8080` (Web)<br>`8765` (MCP) | `aarch64`, `amd64`, `armhf`, `armv7`, `i386` | Self-hosted personal finance manager with multi-account tracking, bank sync, and MCP. |
+| [**Securo Test**](securo-test/) | Test | ![Securo Test Version](https://img.shields.io/badge/dynamic/yaml?label=&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro-test%2Fconfig.yaml&color=orange&style=flat-square) | ✅ Yes | `81` / `8081` (Web)<br>`8766` (MCP) | `aarch64`, `amd64`, `armhf`, `armv7`, `i386` | Pre-release and testing instance of Securo on isolated ports. |
+| [**OmniRoute**](omniroute/) | Stable | ![OmniRoute Version](https://img.shields.io/badge/dynamic/yaml?label=&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fconfig.yaml&color=brightgreen&style=flat-square) | ✅ Yes | `20128` (API/UI) | `aarch64`, `amd64`, `armv7` | AI gateway routing 350+ providers & 1200+ models via one OpenAI-compatible endpoint. |
+| [**OmniRoute Test**](omniroute-test/) | Test | ![OmniRoute Test Version](https://img.shields.io/badge/dynamic/yaml?label=&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute-test%2Fconfig.yaml&color=orange&style=flat-square) | ❌ No | `20129` (API/UI) | `aarch64`, `amd64`, `armv7` | Pre-release test instance of OmniRoute on direct port `20129`. |
 
-The goal is simple:
-
-> Provide useful, high-quality apps that extend what you can do with your Home Assistant installation.
-
-All apps in this repository are maintained independently and may include both stable and experimental releases.
-
-### Contributing
-
-Contributions are welcome! If you'd like to help improve these apps, feel free to [open an issue](https://github.com/yianniscy84/hassio-addons/issues) or submit a pull request.
-
-If you find these apps useful, consider supporting the project — pick whatever fits you:
-
-| Method | Description | Link |
-|--------|-------------|------|
-| ⭐ Star the repo | Free — genuinely helps visibility | [![Star](https://img.shields.io/github/stars/yianniscy84/hassio-addons?style=social)](https://github.com/yianniscy84/hassio-addons/stargazers) |
-| ☕ Buy Me a Coffee | Quick one-off tip, no signup for the donor | [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-FFDD00?style=flat&logo=buy-me-a-coffee&logoColor=white)](https://www.buymeacoffee.com/yianniscy84) |
-| 🍵 Ko-fi | Quick one-off tip, no signup for the donor | [![Ko-fi](https://img.shields.io/badge/Donate-Ko--fi-FF5E5B?style=flat&logo=kofi&logoColor=white)](https://ko-fi.com/yianniscy84) |
-| 🅿️ PayPal | Quick one-off tip | [![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://www.paypal.me/ioannisioannou) |
 ---
 
-## Installation
+## 🚀 Installation
 
-### One-click installation
+### One-Click Installation
 
-The easiest way to add this repository is to use the button below:
+Click the button below to add this repository directly to your Home Assistant instance:
 
 <p align="center">
   <a href="https://my.home-assistant.io/redirect/supervisor_add_addon_repository/?repository_url=https://github.com/yianniscy84/hassio-addons">
@@ -59,122 +49,95 @@ The easiest way to add this repository is to use the button below:
   </a>
 </p>
 
-### Manual installation
+### Manual Installation
 
-In Home Assistant:
-
-1. Open **Settings → Apps → App Store**.
-2. Select the **⋮** menu in the top-right corner.
-3. Select **Repositories**.
-4. Add the following repository:
-
-```text
-https://github.com/yianniscy84/hassio-addons
-```
-
-5. Select **Add**.
-6. The apps from this repository will now appear in the App Store.
-
-For more information, see the official [Home Assistant documentation](https://www.home-assistant.io/common-tasks/os/#installing-third-party-add-ons).
+1. In Home Assistant, navigate to **Settings → Add-ons → Add-on Store**.
+2. Click the **⋮** menu in the top right corner and select **Repositories**.
+3. Enter the repository URL:
+   ```text
+   https://github.com/yianniscy84/hassio-addons
+   ```
+4. Click **Add**, then close the dialog.
+5. The add-ons will appear in the Add-on Store under **Home Assistant Apps by yianniscy84**.
 
 ---
 
-# Available Apps
+## 🔍 Add-on Overview
 
-## [Securo](securo/)
+### [Securo](securo/)
 
 <p align="center">
-  <img src="securo/icon.png" alt="Securo" width="100">
+  <img src="securo/icon.png" alt="Securo Logo" width="90">
 </p>
 
-**Self-hosted personal finance management for Home Assistant.**
+**Securo** is a comprehensive, privacy-first personal finance platform providing deep insight into your accounts, transactions, and budgets without exposing data to third parties.
 
-Securo provides a complete personal finance experience with support for:
+- **Multi-Account & Balances**: Track checking, savings, investment, and liability accounts in one unified dashboard.
+- **Automated Bank Sync**: Integrations for SimpleFIN, Enable Banking (PSD2), and Pluggy.
+- **Rule Engine & Categorization**: Automated categorization and recurring transaction management.
+- **Model Context Protocol (MCP)**: Built-in JSON-RPC MCP server (`/mcp` or port `8765`) to query financial data directly from Claude Desktop, Cursor, n8n, or Home Assistant agents.
+- **Multi-Factor Auth & OIDC**: Full support for TOTP, passkeys, and external OpenID Connect identity providers (Authentik, Authelia, Pocket ID).
 
-- Multi-account tracking
-- Transaction management
-- Transaction imports
-- Bank synchronization
-- Budgets
-- Financial goals
-- Reports and analytics
-- Optional MCP integration (WIP, untested)
+> Upstream project: [securo-finance/securo](https://github.com/securo-finance/securo) | [Documentation](securo/DOCS.md) | [Test Version](securo-test/)
 
-**Upstream project:** [securo-finance/securo](https://github.com/securo-finance/securo)
-
-🧪 **Test version:** [Securo Test](securo-test/)
-
-### Add-on information
-
-| Property | Value |
-|----------|--------|
-| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fconfig.yaml&color=brightgreen) |
-| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fupdater.json&color=blue) |
-| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro%2Fupdater.json&color=grey) |
-| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armhf](https://img.shields.io/badge/armhf-green.svg?logo=arm) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) ![i386](https://img.shields.io/badge/i386-green.svg?logo=intel) |
-| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
 ---
 
-## [OmniRoute](omniroute/)
+### [OmniRoute](omniroute/)
 
 <p align="center">
-  <img src="omniroute/icon.png" alt="OmniRoute" width="100">
+  <img src="omniroute/icon.png" alt="OmniRoute Logo" width="90">
 </p>
 
-**Free AI gateway: one endpoint, 350+ providers, 1200+ models for Home Assistant.**
+**OmniRoute** is a universal, high-performance AI gateway that consolidates 350+ LLM providers and 1200+ models into a single, standardized OpenAI-compatible endpoint.
 
-OmniRoute is an open-source AI gateway that routes LLM requests through one OpenAI-compatible endpoint. It supports 350+ providers (90+ free tiers), 1200+ models, and works with Claude Code, Codex, Cursor, OpenCode, Cline, Copilot, and any OpenAI-compatible tool.
+- **One Universal Endpoint**: Drop-in replacement for OpenAI API (`/v1/chat/completions`) compatible with any AI client.
+- **Smart Fallback & Routing**: 19 routing strategies including priority, cost optimization, weighted load balancing, and automated failover.
+- **Prompt Compression**: Built-in RTK and Caveman token compression saving between 15% and 95% of prompt tokens.
+- **Zero-Config Out-of-the-Box**: Immediate access to over 90 free-tier providers without mandatory upfront API keys.
+- **Agent Protocols**: Built-in MCP (Model Context Protocol) and Agent-to-Agent (A2A) tool chaining.
 
-- Auto-fallback routing across providers
-- 19 routing strategies (priority, weighted, cost-optimized, auto, etc.)
-- Full dashboard UI for managing providers and keys
-- OpenAI-compatible API (`/v1/chat/completions`)
-- MCP & A2A agent protocol support
-- RTK + Caveman compression (15–95% token savings)
-- Zero-config start with free providers
-
-**Upstream project:** [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute)
-
-🧪 **Test version:** [OmniRoute Test](omniroute-test/)
-
-### Add-on information
-
-| Property | Value |
-|----------|--------|
-| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fconfig.yaml&color=brightgreen) |
-| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=blue) |
-| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=grey) |
-| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) |
-| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
----
-
-## Support
-
-Need help or found a problem?
-
-### Community
-
-For questions, discussions, and general help, visit the [Home Assistant Community Forum](https://community.home-assistant.io/t/securo).
-
-### Issues
-
-Found a bug or have a feature request?
-
-Please [open an issue](https://github.com/yianniscy84/hassio-addons/issues) with as much information as possible.
-
-When reporting an issue, please include:
-
-- Home Assistant version
-- Add-on name
-- Add-on version
-- Home Assistant architecture
-- Relevant logs
-- Steps to reproduce the problem
+> Upstream project: [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) | [Documentation](omniroute/DOCS.md) | [Test Version](omniroute-test/)
 
 ---
 
-## Disclaimer
+## 🧪 Production vs. Test Add-ons
 
-These apps are provided as-is. Always keep appropriate backups of important data before installing or upgrading add-ons, especially experimental versions.
+This repository maintains dedicated `-test` variants for both Securo and OmniRoute:
+
+- **Isolated Storage**: Test add-ons use isolated `/data` partitions so your production database and secrets remain untouched.
+- **Separate Network Ports**: Test containers bind to alternate ports (`8081`/`8766` for Securo Test, `20129` for OmniRoute Test) to allow concurrent execution alongside production add-ons.
+- **Release Preview**: Test add-ons receive early upstream feature builds before they land in the stable releases.
 
 ---
+
+## 🛠️ Support & Troubleshooting
+
+If you encounter issues or have suggestions:
+
+1. **Check Documentation**: Review the add-on specific `DOCS.md` ([Securo Docs](securo/DOCS.md) / [OmniRoute Docs](omniroute/DOCS.md)).
+2. **Review Add-on Logs**: Open the add-on in Home Assistant and check the **Log** tab for error traces.
+3. **Open an Issue**: Submit a report on [GitHub Issues](https://github.com/yianniscy84/hassio-addons/issues). Please include:
+   - Home Assistant OS / Core version
+   - Add-on version and architecture
+   - Relevant log snippets (redacting any private tokens or passwords)
+
+---
+
+## ☕ Support the Project
+
+If these add-ons improve your smart home experience, consider supporting ongoing maintenance:
+
+| Method | Link |
+| :--- | :--- |
+| ⭐ **Star the Repository** | [![Star](https://img.shields.io/github/stars/yianniscy84/hassio-addons?style=social)](https://github.com/yianniscy84/hassio-addons/stargazers) |
+| ☕ **Buy Me a Coffee** | [![Buy Me A Coffee](https://img.shields.io/badge/Donate-Buy%20Me%20a%20Coffee-FFDD00?style=flat-square&logo=buy-me-a-coffee&logoColor=white)](https://www.buymeacoffee.com/yianniscy84) |
+| 🍵 **Ko-fi** | [![Ko-fi](https://img.shields.io/badge/Donate-Ko--fi-FF5E5B?style=flat-square&logo=kofi&logoColor=white)](https://ko-fi.com/yianniscy84) |
+| 🅿️ **PayPal** | [![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=flat-square&logo=paypal&logoColor=white)](https://www.paypal.me/ioannisioannou) |
+
+---
+
+## 📄 License & Disclaimer
+
+- Distributed under the [MIT License](LICENSE.md).
+- Upstream projects retain their respective open-source licenses.
+- These add-ons are community-maintained and provided as-is. Always ensure you maintain recent backups in Home Assistant before performing major add-on updates.

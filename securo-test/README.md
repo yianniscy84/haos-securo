@@ -1,63 +1,72 @@
-# Securo Test
+# Home Assistant Add-on: Securo Test
 
 <p align="center">
-  <img src="icon.png" alt="Securo Test" width="100">
+  <img src="icon.png" alt="Securo Test Logo" width="120">
 </p>
 
-Experimental/test release of Securo for Home Assistant.
+<p align="center">
+  <strong>Pre-release and experimental test build of Securo for Home Assistant.</strong><br>
+  Designed for staging updates, trying out new features, and validating migrations without risking production data.
+</p>
 
-## About
+<p align="center">
+  <img src="https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro-test%2Fconfig.yaml&color=orange&style=flat-square" alt="Add-on Version">
+  <img src="https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro-test%2Fupdater.json&color=blue&style=flat-square" alt="Upstream Version">
+  <img src="https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fsecuro-test%2Fupdater.json&color=lightgrey&style=flat-square" alt="Last Update">
+  <img src="https://img.shields.io/badge/Ingress-Supported-blueviolet.svg?style=flat-square" alt="Ingress Supported">
+  <img src="https://img.shields.io/badge/Stage-Testing-orange.svg?style=flat-square" alt="Stage Testing">
+</p>
 
-This version is intended for testing newer or experimental changes before they are included in the stable Securo add-on.
+<p align="center">
+  <img src="https://img.shields.io/badge/aarch64-green.svg?style=flat-square&logo=arm" alt="aarch64">
+  <img src="https://img.shields.io/badge/amd64-green.svg?style=flat-square&logo=amd" alt="amd64">
+  <img src="https://img.shields.io/badge/armhf-green.svg?style=flat-square&logo=arm" alt="armhf">
+  <img src="https://img.shields.io/badge/armv7-green.svg?style=flat-square&logo=arm" alt="armv7">
+  <img src="https://img.shields.io/badge/i386-green.svg?style=flat-square&logo=intel" alt="i386">
+</p>
 
-It provides the same core functionality as Securo:
+---
 
-- Multi-account tracking
-- Transaction management
-- Transaction imports
-- Bank synchronization
-- Budgets
-- Financial goals
-- Reports and analytics
-- Optional MCP integration (WIP, untested)
+> [!WARNING]
+> **Pre-Release / Experimental Add-on**: This add-on is intended for development and pre-release testing. While fully functional, it may contain unreleased changes. For your primary personal finance data, please install the stable [**Securo**](../securo/) add-on.
 
-> **Warning:** This is a test version. It may contain experimental changes and should not be relied upon for critical data.
+---
 
-**Upstream project:** [securo-finance/securo](https://github.com/securo-finance/securo)
+## 🧪 Side-by-Side Execution & Network Ports
 
-## Add-on information
+Securo Test is configured to run alongside the stable Securo instance without port or database conflicts:
 
-| Property | Value |
-|----------|--------|
-| **Version** | ![Version](https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fconfig.yaml&color=brightgreen) |
-| **Upstream version** | ![Upstream](https://img.shields.io/badge/dynamic/json?label=Upstream%20version&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json&color=blue) |
-| **Last updated** | ![Updated](https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmaster%2Fsecuro-test%2Fupdater.json&color=grey) |
-| **Architecture** | ![aarch64](https://img.shields.io/badge/aarch64-green.svg?logo=arm) ![amd64](https://img.shields.io/badge/amd64-green.svg?logo=amd) ![armhf](https://img.shields.io/badge/armhf-green.svg?logo=arm) ![armv7](https://img.shields.io/badge/armv7-green.svg?logo=arm) ![i386](https://img.shields.io/badge/i386-green.svg?logo=intel) |
-| **Ingress** | ![Ingress](https://img.shields.io/badge/Ingress-blueviolet.svg?logo=Ingress) |
+| Service | Securo (Production) | Securo Test (This Add-on) |
+| :--- | :---: | :---: |
+| **Web UI (Direct)** | `8080` | `81` / `8081` |
+| **MCP Server (Direct)** | `8765` | `8766` |
+| **Ingress** | Enabled | Enabled |
+| **Data Directory** | `/data` (Isolated Volume) | `/data` (Isolated Volume) |
 
-## Installation
+---
 
-1. Open **Settings → Apps → App Store**.
-2. Select the **⋮** menu in the top-right corner.
-3. Select **Repositories**.
-4. Add the following repository:
+## 🌟 Key Features
 
-```text
-https://github.com/yianniscy84/hassio-addons
-```
+- **Isolated Testing Ground**: Safely test new upstream database migrations, bank synchronization connections, and OIDC setups.
+- **Full Securo Feature Set**: Multi-account tracking, transaction imports (OFX, QIF, CAMT, CSV), budgeting, reports, and AI Agent / MCP integrations.
+- **Independent Database**: Embedded PostgreSQL 16 container with `pgvector` and `pgcrypto` running on a separate storage volume.
 
-5. Select **Add**.
-6. Find **Securo Test** in the App Store and install it.
+---
 
-For more information, see the official [Home Assistant documentation](https://www.home-assistant.io/common-tasks/os/#installing-third-party-add-ons).
+## 🚀 Installation & Setup
 
-## Support
+1. Add the repository to Home Assistant:
+   ```text
+   https://github.com/yianniscy84/hassio-addons
+   ```
+2. In the Add-on Store, find **Securo Test** and click **Install**.
+3. Access the UI via the **Home Assistant sidebar** or directly at `http://<your-ha-host>:81`.
 
-Need help or found a problem?
+---
 
-- For questions and discussions, visit the [Home Assistant Community Forum](https://community.home-assistant.io/t/securo).
-- Found a bug or have a feature request? Please [open an issue](https://github.com/yianniscy84/hassio-addons/issues).
+## 🛠️ Support & Links
 
-## Disclaimer
-
-This app is provided as-is. Always keep appropriate backups of important data before installing or upgrading add-ons.
+- **Stable Version**: [Securo Add-on](../securo/)
+- **Documentation**: [DOCS.md](DOCS.md)
+- **Issues & Feedback**: [GitHub Issues](https://github.com/yianniscy84/hassio-addons/issues)
+- **Upstream Project**: [securo-finance/securo](https://github.com/securo-finance/securo)
