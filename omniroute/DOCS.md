@@ -23,7 +23,7 @@ OmniRoute is a free, open-source AI gateway that routes LLM requests through one
 
 ### After Installation
 
-1. Open OmniRoute from the Home Assistant sidebar (or on port 20128)
+1. Open OmniRoute on port 20128 of your Home Assistant host
 2. Log in with the password you set in addon options (default: `omniroute`)
 3. Go to **Dashboard → Providers** to add provider API keys
 4. Point your tools at `http://<ha-host>:20128/v1`
@@ -55,10 +55,7 @@ Set the base URL to `http://<ha-host>:20128/v1` — no special setup needed.
 
 ## Accessing the App
 
-After installation, OmniRoute is available:
-
-- In the **Home Assistant sidebar** (ingress — dashboard UI)
-- On **port 20128** of your Home Assistant host (dashboard + API)
+After installation, OmniRoute is available on **port 20128** of your Home Assistant host (dashboard + API).
 
 ## Data Persistence
 

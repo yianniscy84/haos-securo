@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/dynamic/yaml?label=Version&query=%24.version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fconfig.yaml&color=brightgreen&style=flat-square" alt="Add-on Version">
   <img src="https://img.shields.io/badge/dynamic/json?label=Upstream&query=%24.upstream_version&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=blue&style=flat-square" alt="Upstream Version">
   <img src="https://img.shields.io/badge/dynamic/json?label=Updated&query=%24.last_update&url=https%3A%2F%2Fraw.githubusercontent.com%2Fyianniscy84%2Fhassio-addons%2Fmain%2Fomniroute%2Fupdater.json&color=lightgrey&style=flat-square" alt="Last Update">
-  <img src="https://img.shields.io/badge/Ingress-Supported-blueviolet.svg?style=flat-square" alt="Ingress Supported">
+  <img src="https://img.shields.io/badge/Ingress-No-grey.svg?style=flat-square" alt="Ingress Disabled">
   <img src="https://img.shields.io/badge/Stage-Stable-brightgreen.svg?style=flat-square" alt="Stage Stable">
 </p>
 
@@ -32,7 +32,7 @@
 - **Intelligent Fallback & Routing**: 19 routing strategies including automatic failover, priority tiers, round-robin, cost optimization, and latency-based routing.
 - **Unified OpenAI-Compatible API**: Drop-in replacement endpoint (`/v1/chat/completions`) for any tool or library that supports OpenAI.
 - **Token Compression**: Built-in RTK and Caveman prompt compression engines that reduce token usage by 15% to 95%.
-- **Modern Management Dashboard**: Ingress-integrated web UI for managing API keys, providers, model aliases, and traffic metrics.
+- **Modern Management Dashboard**: Web UI for managing API keys, providers, model aliases, and traffic metrics.
 - **Agent Protocols**: Built-in Model Context Protocol (MCP) and Agent-to-Agent (A2A) tool chaining support.
 
 ---
@@ -41,10 +41,10 @@
 
 | Parameter | Specification |
 | :--- | :--- |
-| **Ingress Support** | Yes (available in Home Assistant sidebar) |
+| **Ingress Support** | No (Direct port access) |
 | **Direct Host Port** | `20128` (Dashboard UI + API Endpoint) |
 | **Default API Base URL** | `http://<your-ha-host>:20128/v1` |
-| **Internal Stack** | Node.js runtime + Redis server + Nginx reverse proxy |
+| **Internal Stack** | Node.js runtime + Redis server |
 | **Persistent Data** | Stored under `/data` (keys, JWT secrets, SQLite DB) |
 | **Upstream Project** | [diegosouzapw/OmniRoute](https://github.com/diegosouzapw/OmniRoute) |
 | **Documentation** | [Full Add-on Documentation (DOCS.md)](DOCS.md) |
@@ -60,7 +60,7 @@
    ```
 2. In the Add-on Store, find **OmniRoute** and click **Install**.
 3. (Optional) In the **Configuration** tab, define an `initial_password` for the admin dashboard.
-4. Start the add-on and open it via the **Home Assistant sidebar** (Ingress) or directly at `http://<your-ha-host>:20128`.
+4. Start the add-on and open the dashboard directly at `http://<your-ha-host>:20128`.
 5. Log in and configure your provider API keys under **Dashboard → Providers**.
 
 ---

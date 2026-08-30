@@ -12,7 +12,7 @@ Repository URL: `https://github.com/yianniscy84/hassio-addons`
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | [`securo/`](securo/) | Production | `securo` | `securo-finance/securo` | Port 80 / Ingress | 8765 | 8080 | Python 3.12 (FastAPI), React, PG 16, Redis, Celery, Alpine |
 | [`securo-test/`](securo-test/) | Test | `securo-test` | `securo-finance/securo` | Port 81 / Ingress | 8766 | 8081 | Same as securo |
-| [`omniroute/`](omniroute/) | Production | `omniroute` | `diegosouzapw/OmniRoute` | Port 80 / Ingress | — | 20128 | Node.js (upstream image), Redis, Nginx, Debian |
+| [`omniroute/`](omniroute/) | Production | `omniroute` | `diegosouzapw/OmniRoute` | No Ingress | — | 20128 | Node.js (upstream image), Redis, Debian (direct access) |
 | [`omniroute-test/`](omniroute-test/) | Test | `omniroute-test` | `diegosouzapw/OmniRoute` | No Ingress | — | 20129 | Node.js (upstream image), Redis, Debian (direct access) |
 
 ---
@@ -33,8 +33,8 @@ docker run -d --name securo-test -p 8080:80 -p 8765:8765 -v securo-data:/data se
 # OmniRoute (from omniroute/ or omniroute-test/)
 cd omniroute
 docker build -t omniroute-addon .
-docker run -d --name omniroute-test -p 80:80 -p 20128:20128 -v omniroute-data:/data omniroute-addon
-# Access UI: http://localhost (ingress) or http://localhost:20128
+docker run -d --name omniroute-test -p 20128:20128 -v omniroute-data:/data omniroute-addon
+# Access UI & API: http://localhost:20128
 ```
 
 ---
@@ -51,8 +51,8 @@ docker run -d --name omniroute-test -p 80:80 -p 20128:20128 -v omniroute-data:/d
 
 ### OmniRoute (Node.js / Debian)
 - **Upstream Base Image:** Extends `diegosouzapw/omniroute:latest`. No source build.
-- **Runtime Stack:** Adds `redis-server`, `nginx`, `curl`, `tzdata`, `python3`.
-- **Entrypoint (`run.sh`):** Boots Redis → Nginx (port 80, production only) → OmniRoute (`node dev/run-standalone.mjs`). `omniroute-test` runs standalone on port 20129 without Nginx/ingress.
+- **Runtime Stack:** Adds `redis-server`, `curl`, `tzdata`, `python3`.
+- **Entrypoint (`run.sh`):** Boots Redis → OmniRoute (`node dev/run-standalone.mjs`). Both `omniroute` (port 20128) and `omniroute-test` (port 20129) run standalone without Nginx/Ingress.
 - **Persistent Secrets:** Stored at `/data/jwt_secret` and `/data/api_key_secret`.
 
 ---

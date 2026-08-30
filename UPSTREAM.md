@@ -17,8 +17,8 @@ The production and test addons track different upstream versions. Test gets upda
 
 | Addon | Upstream Version | Addon Version | Last Synced |
 |-------|-----------------|---------------|-------------|
-| `omniroute/` (production) | v3.8.50 | 0.3.4 | 2026-08-28 |
-| `omniroute-test/` (test) | v3.8.50 | 0.3.4 | 2026-08-28 |
+| `omniroute/` (production) | v3.8.50 | 0.3.6 | 2026-08-30 |
+| `omniroute-test/` (test) | v3.8.50 | 0.3.6 | 2026-08-30 |
 
 Both addons clone from upstream Git tags. Bump `OMNIROUTE_VERSION` in the Dockerfile to update.
 
@@ -49,5 +49,4 @@ Both addons clone from upstream Git tags. Bump `OMNIROUTE_VERSION` in the Docker
 - HAOS-specific files are maintained in this repo:
   - `*/run.sh` — entry script (bashio, Redis, secrets generation)
   - `*/config.yaml` — addon manifest (ports, options, schema)
-  - `*/nginx.conf` — reverse proxy with SSE/WebSocket support
   - `*/Dockerfile` — extends official image with Redis + bashio stubs

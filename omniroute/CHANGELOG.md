@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.6
+
+- Remove ingress support (no more HA sidebar access)
+- Remove nginx — app accessed directly on port 20128
+- Update DOCS.md to remove ingress references
+
 ## 0.3.5
 
 - Fix sidebar icon: use `mdi:api` instead of invalid `mdi:route`
