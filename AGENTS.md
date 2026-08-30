@@ -96,6 +96,11 @@ See [`UPSTREAM.md`](UPSTREAM.md) for version matrix and sync tracking.
 
 ---
 
+## Git & Version Control
+- **Never Commit or Push Without Asking:** NEVER run `git commit` or `git push` without explicit user permission/confirmation. Always ask and receive explicit approval first.
+
+---
+
 ## Response Style & Efficiency
 - Direct answers first. Technical reasoning follows when necessary.
 - No conversational preamble, hollow closings, or restating the prompt.
