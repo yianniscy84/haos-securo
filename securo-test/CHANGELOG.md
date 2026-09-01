@@ -1,5 +1,19 @@
 # Changelog
 
+## 0.30.0
+
+- Sync with upstream securo v0.15.0
+- New: Invoices module (receivables ledger, invoice lifecycle, line items, logo upload, attachments)
+- New: Server-side invoice PDF generation via ReportLab
+- New: Public shared invoice tokens (`/i/:token`)
+- New: Slovak (`sk`) translations
+- New: Azerbaijani Manat (`AZN`) and Turkish Lira (`TRY`) currency support
+- New: Azerbaijani jurisdiction tax ID and amount formatting validation rules
+- Fix: Enable Banking pagination loops and duplicate transaction import prevention
+- Fix: Shared bank connection scoping and connection owner assignment
+- Fix: Dashboard pending spend inclusion in category widget
+- Update: Frontend upgraded to Vite 8 and TypeScript 7
+
 ## 0.29.2
 
 - Add `Cache-Control: no-cache, no-store, must-revalidate` to `index.html` in Nginx to prevent browsers from caching stale bundle script hashes across updates
